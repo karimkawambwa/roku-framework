@@ -1,0 +1,14 @@
+<layout id="main-layout">
+	<list id="side-menu" width="30%" height="100%" x=0 y=0
+		constraint="L-L|main-layout|0, T-T|main-layout|0, B-B|main-layout|0">
+		<button id="home" title="Home"/>
+		<button id="test-1" title="Home"/>
+		<button id="test-2" title="Home"/>
+		<button id="test-3" title="Home"/>
+		<button id="test-4" title="Home"/>
+	</list>
+	<layout id="content-layout" 
+			constrait="L-L|side-menu|0, B-B|main-layout|0, R-R|main-layout|0, T-T|main-layout|0">
+		
+	</layout>
+</layout>
