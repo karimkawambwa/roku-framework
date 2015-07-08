@@ -1,0 +1,2 @@
+function UIImage()
+end function

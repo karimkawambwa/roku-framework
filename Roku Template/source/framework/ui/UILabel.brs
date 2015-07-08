@@ -1,0 +1,2 @@
+function UILabel()
+end function

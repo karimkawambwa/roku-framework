@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<buildpath>
-	<buildpathentry kind="src" path="out"/>
-	<buildpathentry kind="src" path="locale/default/images"/>
-	<buildpathentry kind="src" path="source"/>
-	<buildpathentry excluding="default/images/" kind="src" path="locale"/>
-</buildpath>

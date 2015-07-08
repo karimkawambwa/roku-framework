@@ -1,3 +1,0 @@
-function NavigationController()
-
-end function
