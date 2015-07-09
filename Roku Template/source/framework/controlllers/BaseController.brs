@@ -17,7 +17,6 @@ function BaseController(appendParams as Object)
             m.view = LoadViewNamed(m.viewName, m.displayTypeSpecific)
         else
             m.view = UIView()
-            m.view.setBackgroudColor("white")
         end if
         
         m.viewLoaded()

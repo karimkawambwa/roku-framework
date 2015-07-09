@@ -26,15 +26,15 @@ function initScreen(app)
         app.screenSize = {
             x       : app.screenSafeZone.x
             y       : app.screenSafeZone.y
-            width   : 1280  - app.screenSafeZone.x
-            height  : 720   - app.screenSafeZone.y
+            width   : 1280  - 2*app.screenSafeZone.x
+            height  : 720   - 2*app.screenSafeZone.y
         }
     else
         app.screenSize = {
             x       : app.screenSafeZone.x
             y       : app.screenSafeZone.y
-            width   : 640  - app.screenSafeZone.x
-            height  : 480  - app.screenSafeZone.y
+            width   : 640  - 2*app.screenSafeZone.x
+            height  : 480  - 2*app.screenSafeZone.y
         }
     end if
 end function

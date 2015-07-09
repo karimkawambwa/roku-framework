@@ -1,4 +1,6 @@
 function Config(app)
+    app.frameworkFolder = "pkg://source/framework/"
+    
     app.viewFolder = { 
         SD          : "pkg://source/views/SD/"
         HD          : "pkg://source/views/HD/"
@@ -14,4 +16,6 @@ function Config(app)
         fr_CA       : "pkg://locale/fr_CA/images/"
         Default     : "pkg://locale/default/images/"
     }
+    
+    app.colorNames = ParseJson(ReadAsciiFile(app.frameworkFolder+"ui/colors/color-names.json"))
 end function

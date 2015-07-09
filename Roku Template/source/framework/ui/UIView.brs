@@ -1,35 +1,40 @@
 function UIView(options, appendOptions = invalid as Object)
-    this = UILayout(options)
+    this = UILayout(options) 'Add Layout Tools
     this.Append({
-        screen      : GetApp().screen
-        compositor  : GetApp().compositor
         region      : invalid
-        bitmap      : invalid 'Created When Needed
+        sprite      : invalid
+        bitmap      : invalid
+        backgroundColor  : UIColorWithName(options["background-color"])
     })
     
-    if appendOptions <> invalid then this.Append(appendOptions)
+    if appendOptions <> invalid then this.Append(appendOptions) 'Other Views options
     
     'Called by RefreshScreen
-    this.draw = function()
-        if m.bitmap <> invalid then m.screen.DrawObject(m.x, m.y, m.bitmap)
+    this.draw = function(component as Object) as Boolean
+        m.sprite.setDrawableFlag(m.isOpaque())
+        return true
     end function
     
-    this.initBackGroundBitmap = function()
+    this.initBackground = function()
         m.bitmap = CreateBitmap(m.width, m.height)
-        m.screen.DrawObject(m.x, m.y, m.bitmap)
+        m.region = CreateRegion(0, 0, m.width, m.height, m.bitmap)
+        m.sprite = CreateSprite(m.x, m.y, m.region)
+        
+        m.sprite.SetDrawableFlag(m.isOpaque())
     end function
     
-    this.setBackGroundColor = function(color as String)
-        if m.bitmap = invalid then m.initBackGroundBitmap()
-        
-        m.bitmap.Clear(HexToInteger("FFFFFFFF"))
+    this.setBackgroundColor = function(color as Integer)
+        m.backgroundColor = color
+        if m.bitmap = invalid then m.initBackground()
+        m.bitmap.Clear(m.backgroundColor)
     end function
     
-    'image as uiimage
-    this.setBackGroundImage = function(image)
-        if m.bitmap = invalid then m.initBackGroundBitmap()
-        
+    this.init = function()
+        if m.backgroundColor <> invalid then m.initBackground()
+        m.bitmap.Clear(m.backgroundColor)
     end function
+    
+    this.init()
     
     return this
 end function

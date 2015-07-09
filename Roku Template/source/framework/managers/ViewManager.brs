@@ -19,14 +19,27 @@ function LoadViewNamed(viewName, displaySpecific = false as Boolean)
     xmlString = ReadAsciiFile(app.viewFolder.Default+viewName+".xml")
     xml = ParseXML(xmlString)
     
-    body = xml.getbody()
+    loadedView = CreateUI(xml.GetName(), xml.GetAttributes())
     
-    if body <> invalid
-        for each e in body
+    LoadChildrenForView(loadedView, xml)
+    
+    return loadedView
+end function
+
+function LoadChildrenForView(parentView, parentXml)
+    childrenXml = parentXml.getbody()
+    if childrenXml <> invalid
+        for each childXml in childrenXml
+            view = CreateUI(childXml.GetName(), childXml.GetAttributes())
+            
+            if view = invalid then return false
+            
+            LoadChildrenForView(view, childXml)
+            parentView.addChild(view)
         end for
     end if
     
-    return CreateUI(xml.GetName(), xml.GetAttributes())
+    return true
 end function
 
 function ParseXML(str As String) As Dynamic
