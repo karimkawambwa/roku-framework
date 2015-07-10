@@ -35,7 +35,7 @@ function LoadChildrenForView(parentView, parentXml)
             if view = invalid then return false
             
             LoadChildrenForView(view, childXml)
-            parentView.addChild(view)
+            parentView.children.addChild(view)
         end for
     end if
     

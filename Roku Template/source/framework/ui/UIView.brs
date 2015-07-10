@@ -11,8 +11,11 @@ function UIView(options, appendOptions = invalid as Object)
     
     'Called by RefreshScreen
     this.draw = function(component as Object) as Boolean
-        m.sprite.setDrawableFlag(m.isOpaque())
+        if m.sprite <> invalid then m.sprite.setDrawableFlag(m.isOpaque())
         return true
+    end function
+    
+    this.prepareForLayout = function()
     end function
     
     this.initBackground = function()

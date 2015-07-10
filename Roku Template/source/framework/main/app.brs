@@ -34,6 +34,7 @@ function initApp()
     initScreen(gg.app)
     initCompositor(gg.app)
     initTextureManager(gg.app)
+    initAsyncTaskManager(gg.app)
     
     gg.app.navigationManager = NavigationManager()
     gg.app.delegate = AppDelegate()

@@ -19,6 +19,8 @@ function UIBase(options)
     this.setOpaque = function(opaque = true as Boolean)
         m.uibase___pr.opaque = opaque
         if m.sprite <> invalid then m.sprite.setDrawableFlag(opaque)
+
+        m.children.perform("setOpaque", true)
         
         'This will mostly be a visual change no need to update the layout
         'Just refresh the screen automatically
@@ -27,9 +29,7 @@ function UIBase(options)
     
     this.setHidden = function(hidden = true as Boolean)
         m.uibase___pr.hidden = hidden
-        if hidden then m.uibase___pr.opaque = false
-        if m.sprite <> invalid then m.sprite.setDrawableFlag(m.uibase___pr.opaque)
-        
+        m.setOpaque(true)
         'Update Layout
         'Hidden will make the view be treated as 0 width and 0 height
         '

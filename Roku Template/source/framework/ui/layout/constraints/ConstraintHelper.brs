@@ -4,15 +4,36 @@
 '(==) with no flexibility i.e exact value at (100) % priority
 '
 'Maximum of 4 constraints per view i.e top, bottom, left, right
-function ParseConstraintString(constraintsString)
+function CreateConstraintsContainerFor(view, constraintsString)
     
+    ' Setup the constraints container
     constraints = {
-        T  : invalid   'top
-        B  : invalid   'bottom
-        L  : invalid   'left
-        R  : invalid   'right
+        view : view
+        T    : invalid   'top
+        B    : invalid   'bottom
+        L    : invalid   'left
+        R    : invalid   'right
     }
+
+    constraints.prepareForLayout = function()
+        getViewConstrainedToSide = function(constraint, view) as Void
+            if constraint = invalid then return
+
+            constraint.view = view.parent.childWithId(constraint.ref)
+            if constraint.view = invalid then 
+                print "Constraint Error : Cannot constrain "+side+" [ "+child.id+" ] in [ "+parent.id+" ] to invalid view"
+                print "Constraint Errored : "
+                print constraint
+            end if
+        end function
+            
+        getViewConstrainedToSide(m.T, m.view)
+        getViewConstrainedToSide(m.B, m.view)
+        getViewConstrainedToSide(m.L, m.view)
+        getViewConstrainedToSide(m.R, m.view)
+    end function
     
+    'Begin parsing if string is valid
     if constraintsString = invalid then return constraints
     
     reg1 = CreateObject("roRegex", "(\t|,)+", "")

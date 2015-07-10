@@ -15,6 +15,10 @@ function NavigateWithoutHistoryTo(controller)
     AppNavigation().navigateTo(controller, true)
 end function
 
+function ScheduleTask(task)
+    return GetApp().async.scheduleTask(task)
+end function
+
 function CreateBitmap(width, height)
     return CreateObject("roBitmap", {width: width, height: height, alpahEnabled: true})
 end function
@@ -33,4 +37,8 @@ end function
 
 function copy(obj as Object) as Object
     return ParseJson(FormatJson(obj))
+end function
+
+function uniqueid(append = "id" as String)
+    return append +"_"+random(1000000000, 9999999999).toStr()
 end function
