@@ -30,3 +30,7 @@ end function
 function random(num_min As Integer, num_max As Integer) As Integer
     return (RND(0) * (num_max - num_min)) + num_min
 end function
+
+function copy(obj as Object) as Object
+    return ParseJson(FormatJson(obj))
+end function
