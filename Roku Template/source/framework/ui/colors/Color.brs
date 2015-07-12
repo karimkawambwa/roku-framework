@@ -20,16 +20,16 @@
 ' 10 	: 1A
 ' 5 	: 0D
 ' 0 	: 00
-function UIColorWithName(name, opacity = "FF" as String) as Integer
+function ColorWithName(name, opacity = "FF" as String) as Integer
     app = GetApp()
     if app.colorNames <> invalid
         hex = app.colorNames[name]
         return HexToInteger(hex + opacity)
     end if
-    return UIColorWithName("black")
+    return ColorWithName("black")
 end function
 
-function UIColorOpacity()
+function ColorOpacity()
 	return {
 		PERCENT_100	: "FF"
 		PERCENT_95	: "F2"

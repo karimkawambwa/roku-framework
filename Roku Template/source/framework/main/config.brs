@@ -17,5 +17,5 @@ function Config(app)
         Default     : "pkg://locale/default/images/"
     }
     
-    app.colorNames = ParseJson(ReadAsciiFile(app.frameworkFolder+"ui/colors/color-names.json"))
+    app.colorNames = ParseJson(ReadAsciiFile(app.frameworkFolder+"ui/colors/colors.json"))
 end function
