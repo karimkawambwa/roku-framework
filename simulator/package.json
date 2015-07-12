@@ -1,0 +1,24 @@
+{
+  "name": "node-webkit-angular-bootstrap-starter",
+  "version": "0.0.1",
+  "description": "Starter destkop app using node-webkit, html5, angular, and bootstrap",
+  "main": "app/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "window": {
+    "title": "node-webkit-angular-bootstrap-starter",    
+    "toolbar": true,
+    "frame": true,
+    "width": 1024,
+    "height": 768,
+    "position": "center"/*,
+    "icon": "link.png",
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600*/
+  }
+}
