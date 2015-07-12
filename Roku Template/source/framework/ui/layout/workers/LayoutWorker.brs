@@ -78,12 +78,12 @@ function PerformLayout(args) as Boolean
         end if
     end if
 
-    if view.children.childrenCount() <= args.index and args.workStack.Count() > 0 then
+    if view.children.Count() <= args.index and args.workStack.Count() > 0 then
         obj = args.workStack.Pop()
 
         args.context = obj.context
         args.index   = obj.index
     end if
     
-    return args.workStack.Count() = 0 and args.children.childrenCount() <= args.index
+    return args.workStack.Count() = 0 and args.children.Count() <= args.index
 end function
