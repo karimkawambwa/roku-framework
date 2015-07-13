@@ -61,6 +61,10 @@ function UILayout(options)
     ' Container
     AddChildrenContainerTo(this)
     
+    this.z = function()
+        return m.layout___pr.z
+    end function
+    
     this.x = function()
         return m.layout___pr.x
     end function

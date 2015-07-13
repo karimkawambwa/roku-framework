@@ -71,21 +71,19 @@ function PerformLayout(args) as Boolean
             end if
         end if
         
-        view.addZ(1)
-        
-        if view.children.Count() <> 0
-            args.workStack.Push({context : m, index : options.index})
-            args.context = view
-            args.index   = 0
-        end if
+        if m.z() >= view.z() then view.setZ(m.z()+1)
     end if
 
-    if view.children.Count() <= args.index and args.workStack.Count() > 0 then
+    if view.children.Count() <> 0
+        args.workStack.Push({context : m, index : args.index})
+        args.context = view
+        args.index   = 0
+    else if view.children.Count() <= args.index and args.workStack.Count() > 0 then
         obj = args.workStack.Pop()
-
+        
         args.context = obj.context
         args.index   = obj.index
     end if
     
-    return args.workStack.Count() = 0 and m.children.Count() <= args.index
+    return args.workStack.Count() = 0 and args.context.children.Count() <= args.index
 end function

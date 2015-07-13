@@ -9,7 +9,6 @@ end function
 function initScreen(app)
     DisplaySize = app.deviceInfo.GetDisplaySize()
     
-    app.screen     = CreateBitmap(DisplaySize.w, DisplaySize.h) 
     app.roScreen   = CreateObject("roScreen", true)
     app.roScreen.SetMessagePort(app.msgPort)
     
@@ -24,17 +23,19 @@ function initScreen(app)
     
     if app.isWideScreen
         app.screenSize = {
-            x       : app.screenSafeZone.x
-            y       : app.screenSafeZone.y
-            width   : 1280  - 2*app.screenSafeZone.x
-            height  : 720   - 2*app.screenSafeZone.y
+            x       : 0
+            y       : 0
+            width   : 1280
+            height  : 720
         }
     else
         app.screenSize = {
-            x       : app.screenSafeZone.x
-            y       : app.screenSafeZone.y
-            width   : 640  - 2*app.screenSafeZone.x
-            height  : 480  - 2*app.screenSafeZone.y
+            x       : 0
+            y       : 0
+            width   : 640
+            height  : 480
         }
     end if
+    
+    app.screen     = CreateBitmap(app.screenSize.width, app.screenSize.height) 
 end function
