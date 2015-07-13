@@ -3,8 +3,6 @@ function initAsyncTaskManager(app)
         timer : CreateObject("roTimespan")
         x___ : { 'don't access directly)
             tasks : []
-            scheduledTasks : {}
-            performingTasks : []
         }
     }
 
@@ -30,31 +28,24 @@ function initAsyncTaskManager(app)
         task.delay = if_else(task.delay <> invalid, task.delay, 0)
         task.state = "scheduled"
         
-        m.x___.tasks.Push(id)
-        m.x___.scheduledTasks[id] = task
+        m.x___.tasks.Push(task)
                 
         return id
     end function
     
     app.async.setupTasksToPerform = function()
         tasks = []
-        for each key in m.x___.tasks
-            task = m.x___.scheduledTasks[key]
-            now = m.timer.TotalMilliseconds()
-            if ((now - task.scheduled)/1000) >= task.delay
-                task.state = "performing"
-
-                if task.onStateChange <> invalid
-                    task.onStateChange("willstart", task.onStateChangeArg)
+        for each task in m.x___.tasks
+            if task.state <> "performing"
+                now = m.timer.TotalMilliseconds()
+                if ((now - task.scheduled)/1000) >= task.delay
+                    task.state = "performing"
+    
+                    if task.onStateChange <> invalid
+                        task.onStateChange("willstart", task.onStateChangeArg)
+                    end if
                 end if
-
-                tasks.Push(task)
             end if
-        end for
-        
-        for each task in tasks 'remove from scheduled
-            m.x___.scheduledTasks.Delete(task.id)
-            m.x___.performingTasks.Push(task)
         end for
     end function
     
@@ -62,15 +53,17 @@ function initAsyncTaskManager(app)
         m.setupTasksToPerform()
         endTasks = []
         start = m.timer.TotalMilliseconds()
-        for each task in m.x___.performingTasks
-            done = task.callback(task.arg)
-            if done then
-                endTasks.Push(task.id)
-            end if
-            
-            now = m.timer.TotalMilliseconds()
-            if now - start >= 2000 'don't stay in here more than 2 seconds
-                exit for
+        for each task in m.x___.tasks
+            if task.state = "performing"
+                done = task.callback(task.arg)
+                if done then
+                    endTasks.Push(task.id)
+                end if
+                
+                now = m.timer.TotalMilliseconds()
+                if now - start >= 2000 'don't stay in here more than 2 seconds
+                    exit for
+                end if
             end if
         end for
 
@@ -79,32 +72,36 @@ function initAsyncTaskManager(app)
         end for
     end function
     
-    app.async.performTask = function(id as String)
-    end function
-    
     app.async.cancelTask = function(id)
         return m.endTask(id, "cancelled")
     end function
     
-    app.async.indexOfId = function(id)
-        for index = 0 to m.x___.tasks.Count()
-            if m.x___.tasks[index] = id then return index
+    app.async.taskWithId = function(id)
+        for each task in m.x___.tasks
+            if task.id = id then return task
         end for
-        return -1
+        return invalid
+    end function
+    
+    app.async.indexOfTaskWithId = function(id)
+        index = -1
+        for each task in m.x___.tasks
+            index = index + 1
+            if task.id = id then exit for
+        end for
+        return index
     end function
     
     app.async.endTask = function(id, state = "done" as String)
         if id = invalid then return true
         
-        task = m.x___.performingTasks[id]
+        task = m.taskWithId(id)
 
         if task.onStateChange <> invalid
             task.onStateChange(state, task.onStateChangeArg)
         end if
-
-        m.x___.performingTasks.Delete(id)
-
-        index = m.indexOfId(id)
+        
+        index = m.indexOfTaskWithId(id)
         if index >= 0 then m.x___.tasks.Delete(index)
         return true
     end function

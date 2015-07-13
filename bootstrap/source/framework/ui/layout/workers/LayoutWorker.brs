@@ -15,17 +15,17 @@ function PerformLayout(args) as Boolean
         'Desired positions
         if view.relative_position = invalid then
             view.relative_position = {
-                x : if_else(view.x <> invalid, view.x, 0)
-                y : if_else(view.y <> invalid, view.y, 0)
+                x : if_else(view.x() <> invalid, view.x(), 0)
+                y : if_else(view.y() <> invalid, view.y(), 0)
             } 
         end if
-            
-        'default x and y if provide
-        view.x = m.x + view.relative_position.x
-        view.y = m.y + view.relative_position.y
         
-        offset = view.x - m.x 'x that would place view outside layout area
-        view.maxWidth = m.width - offset
+        'default x and y if provide
+        view.setX(m.x() + view.relative_position.x)
+        view.setY(m.y() + view.relative_position.y)
+        
+        offset = view.x() - m.x() 'x that would place view outside layout area
+        view.setMaxWidth(m.width() - offset)
         
         view.prepareForLayout()
         
@@ -37,41 +37,43 @@ function PerformLayout(args) as Boolean
             bottom = view.constraints.B 'bottom contraint
             left   = view.constraints.L 'left contraint
             right  = view.constraints.R 'right contraint
-
+            
             if top <> invalid
-                if top.side = "T"
-                    view.y = top.view.y + top.value
-                else if top.side = "B"
-                    view.y = top.view.y + top.view.height() + top.view.value
+                if top.side() = "T"
+                    view.setY(top.view.y() + top.value())
+                else if top.side() = "B"
+                    view.setY(top.view.y() + top.view.height() + top.value())
                 end if
             end if
 
             if bottom <> invalid
-                if bottom.side = "T"
-                    view.y = bottom.view.y + bottom.value + view.height()
-                else if bottom.side = "B"
-                    view.y = bottom.view.y + bottom.view.height() - bottom.value - view.height()
+                if bottom.side() = "T"
+                    view.setY(bottom.view.y() + bottom.value() + view.height())
+                else if bottom.side() = "B"
+                    view.setY(bottom.view.y() + bottom.view.height() - bottom.value() - view.height())
                 end if
             end if
             
             if left <> invalid
-                if left.side = "L"
-                    view.x = left.view.x + left.value()
-                else if left.side = "R"
-                    view.x = left.view.x + left.view.width() + left.value()
+                if left.side() = "L"
+                    view.setX(left.view.x() + left.value())
+                else if left.side() = "R"
+                    view.setX(left.view.x() + left.view.width() + left.value())
                 end if
             end if
             
             if right <> invalid
-                if right.side = "L"
-                    view.x = right.view.x + right.view.width() + right.value()
-                else if right.side = "R"
-                    view.x = right.view.x + right.view.width() - view.width() - right.value()
+                if right.side() = "L"
+                    view.setX(right.view.x() + right.view.width() + right.value())
+                else if right.side() = "R"
+                    view.setX(right.view.x() + right.view.width() - view.width() - right.value())
                 end if
             end if
         end if
         
-        if view.children.childrenCount() <> 0
+        view.addZ(1)
+        
+        if view.children.Count() <> 0
             args.workStack.Push({context : m, index : options.index})
             args.context = view
             args.index   = 0
@@ -85,5 +87,5 @@ function PerformLayout(args) as Boolean
         args.index   = obj.index
     end if
     
-    return args.workStack.Count() = 0 and args.children.Count() <= args.index
+    return args.workStack.Count() = 0 and m.children.Count() <= args.index
 end function

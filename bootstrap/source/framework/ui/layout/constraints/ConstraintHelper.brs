@@ -9,17 +9,19 @@ function CreateConstraintsContainerFor(view, constraintsString)
     ' Setup the constraints container
     constraints = {
         view : view
-        T    : invalid   'top
-        B    : invalid   'bottom
-        L    : invalid   'left
-        R    : invalid   'right
+        'T    : invalid   'top
+        'B    : invalid   'bottom
+        'L    : invalid   'left
+        'R    : invalid   'right
     }
+    
+    constraints.SetModeCaseSensitive()
 
     constraints.prepareForLayout = function()
         getViewConstrainedToSide = function(constraint, view) as Void
             if constraint = invalid then return
-
-            constraint.view = view.parent.childWithId(constraint.ref)
+            
+            constraint.view = view.parent.childWithId(constraint.ref())
             if constraint.view = invalid then 
                 print "Constraint Error : Cannot constrain "+side+" [ "+child.id+" ] in [ "+parent.id+" ] to invalid view"
                 print "Constraint Errored : "
@@ -46,12 +48,12 @@ function CreateConstraintsContainerFor(view, constraintsString)
         
         mySide      = params[0]
         toSide      = params[1]
-        flexibility = params[2]
-        value       = params[3]
+        value       = params[2]
+        flexibility = params[3]
         priority    = params[4]
         ref         = params[5]
         
-        constraint = UIContraint(ref, toSide, value, priority, flexibility)
+        constraint = UIContraint(ref, toSide, toInt(value), toInt(priority), flexibility)
         constraints[mySide] = constraint
     end for
     

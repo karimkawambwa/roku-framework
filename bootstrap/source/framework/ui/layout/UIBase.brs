@@ -18,9 +18,10 @@ function UIBase(options)
     
     this.setOpaque = function(opaque = true as Boolean)
         m.uibase___pr.opaque = opaque
-        if m.sprite <> invalid then m.sprite.setDrawableFlag(opaque)
+        
+        m.sprites.SetDrawableFlag(opaque)
 
-        m.children.perform("setOpaque", true)
+        m.children.perform("setOpaque", opaque)
         
         'This will mostly be a visual change no need to update the layout
         'Just refresh the screen automatically

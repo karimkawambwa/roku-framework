@@ -14,7 +14,7 @@ end function
 
 function RefreshScreen()
     app = GetApp()
-    app.screen.Clear(UIColorWithName("white"))
+    app.screen.Clear(ColorWithName("black"))
     
     currentController = AppNavigation().currentController()
     currentView = currentController.view
@@ -27,7 +27,7 @@ function RefreshScreen()
     
     app.compositor.DrawAll()
     
-    AddBorderToBitmap(app.screen, UIColorWithName("red"))
+    AddBorderToBitmap(app.screen, ColorWithName("red"))
     
     '1:1 scaling
     scaleX = app.roScreen.GetWidth() / app.screen.GetWidth()
