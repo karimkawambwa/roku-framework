@@ -45,6 +45,16 @@ function UIView(options, appendOptions = invalid as Object)
     end function
     
     'Call Render Screen After This
+    this.setHeight = function(height)
+        m.layout___pr.height = height
+    end function
+    
+    'Call Render Screen After This
+    this.setWidth = function(width)
+        m.layout___pr.width = width
+    end function
+    
+    'Call Render Screen After This
     this.MoveTo = function(x, y)
         offset_x = x - m.x()
         offset_y = y - m.y()
@@ -85,9 +95,8 @@ function UIView(options, appendOptions = invalid as Object)
     
     this.init = function()
         if m.backgroundColor <> invalid then m.initBackground()
+        print "INIT [ "+ m.id+" ]"
     end function
-    
-    this.init()
     
     return this
 end function

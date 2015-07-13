@@ -13,13 +13,20 @@ function CreateUI(type_, options) as Object
     return ui[type_](options)
 end function
 
-function LoadViewNamed(viewName, displaySpecific = false as Boolean)
+function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid, y = invalid, w = invalid, h = invalid)
     app = GetApp()
     
     xmlString = ReadAsciiFile(app.viewFolder.Default+viewName+".xml")
     xml = ParseXML(xmlString)
     
     loadedView = CreateUI(xml.GetName(), xml.GetAttributes())
+    
+    if x <> invalid then loadedView.setX(x)
+    if y <> invalid then loadedView.setY(y)
+    if w <> invalid then loadedView.setWidth(w)
+    if h <> invalid then loadedView.setHeight(h)
+    
+    loadedView.init()
     
     LoadChildrenForView(loadedView, xml)
     

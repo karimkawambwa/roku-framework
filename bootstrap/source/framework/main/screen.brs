@@ -37,5 +37,5 @@ function initScreen(app)
         }
     end if
     
-    app.screen     = CreateBitmap(app.screenSize.width, app.screenSize.height) 
+    app.screen     = CreateBitmap(app.screenSize.width, app.screenSize.height)
 end function

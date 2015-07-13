@@ -35,8 +35,11 @@ function UILayout(options)
             x               :   if_else(options.x <> invalid, toInt(options.x), 0)
             y               :   if_else(options.y <> invalid, toInt(options.y), 0)
             z               :   if_else(options.z <> invalid, toInt(options.z), 0)
-            width           :   if_else(options.width <> invalid, toInt(options.width), 0)
-            height          :   if_else(options.height <> invalid, toInt(options.height), 0)
+            width           :   invalid 'will be set
+            height          :   invalid 'will be set
+            
+            widthPercent    :   -1
+            heightPercent   :   -1
             
             ' if width is provided then autoWidth will be set to false
             autoWidth : (options.width = invalid or (options.autoWidth <> invalid and options.width = invalid))
@@ -47,6 +50,36 @@ function UILayout(options)
             maxHeight : 0
         }
     })
+    
+    this.layout___pr.width = if_else(options.width <> invalid, options.width, 0)
+    this.layout___pr.height = if_else(options.height <> invalid, options.height, 0)
+    
+    if type(this.layout___pr.width) = "roString"
+        if this.layout___pr.width.right(1) = "%"
+           this.layout___pr.widthPercent = toInt(this.layout___pr.width.left(this.layout___pr.width.len()-1))/100
+        else
+            this.layout___pr.width = toInt(this.layout___pr.width)
+        end if
+    end if
+    
+    if type(this.layout___pr.height) = "roString"
+        if this.layout___pr.height.right(1) = "%"
+           this.layout___pr.heightPercent = toInt(this.layout___pr.height.left(this.layout___pr.height.len()-1))/100
+        else
+            this.layout___pr.height = toInt(this.layout___pr.height)
+        end if
+    end if
+    
+    this.movedToParent = function(parent)
+        if m.layout___pr.widthPercent > -1
+            m.setWidth(Fix(m.layout___pr.widthPercent * parent.width()))
+        end if
+        if m.layout___pr.heightPercent > -1
+            m.setHeight(Fix(m.layout___pr.heightPercent * parent.height()))
+        end if
+        
+        m.init()
+    end function
     
     this.constraints = CreateConstraintsContainerFor(this, options.constraints)
     

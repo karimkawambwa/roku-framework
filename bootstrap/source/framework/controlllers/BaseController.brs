@@ -14,7 +14,7 @@ function BaseController(appendParams as Object)
     'Careful when overiding this function
     this.init = function()
         if m.viewName <> invalid 
-            m.view = LoadViewNamed(m.viewName, m.displayTypeSpecific)
+            m.view = LoadViewNamed(m.viewName, m.displayTypeSpecific, 0, 0, AppScreen("width"), AppScreen("height"))
         else
             m.view = UIView()
         end if

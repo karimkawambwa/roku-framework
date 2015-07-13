@@ -3,6 +3,16 @@ function GetApp()
     return aa.app
 end function
 
+function AppScreen(command)
+    app = GetApp()
+    if command = "width"
+        return app.screen.GetWidth()
+    else if command = "height"
+        return app.screen.GetWidth()
+    end if
+    return invalid
+end function
+
 function AppNavigation()
     return GetApp().navigationManager
 end function

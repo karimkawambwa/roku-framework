@@ -25,7 +25,8 @@ function AddChildrenContainerTo(this)
         m.x___.childrenIds.Push(child.id)
         m.x___.children[child.id]= child
         
-        child.parent = m
+        child.parent = m.parent
+        if child.movedToParent <> invalid then child.movedToParent(m.parent)
     end function
     
     'Each child must be an object with a unique ID
