@@ -22,35 +22,39 @@
 ' 0 	: 00
 function ColorWithName(name, opacity = "FF" as String) as Integer
     app = GetApp()
-    if app.colorNames <> invalid
+    if app = invalid then return 255
+    
+    if app.colorNames <> invalid and name <> invalid and app.colorNames[name] <> invalid
         hex = app.colorNames[name]
         return HexToInteger(hex + opacity)
     end if
-    return ColorWithName("black")
+    
+    return ColorWithName("black", opacity)
 end function
 
 function ColorOpacity()
-	return {
-		PERCENT_100	: "FF"
-		PERCENT_95	: "F2"
-		PERCENT_90	: "E6"
-		PERCENT_85	: "D9"
-		PERCENT_80	: "CC"
-		PERCENT_75	: "BF"
-		PERCENT_70	: "B3"
-		PERCENT_65	: "A6"
-		PERCENT_60	: "99"
-		PERCENT_55	: "8C"
-		PERCENT_50	: "80"
-		PERCENT_45	: "73"
-		PERCENT_40	: "66"
-		PERCENT_35	: "59"
-		PERCENT_30	: "4D"
-		PERCENT_25	: "40"
-		PERCENT_20	: "33"
-		PERCENT_15	: "26"
-		PERCENT_10	: "1A"
-		PERCENT_5	: "0D"
-		PERCENT_0	: "00"
-	}
+	colorop = {}
+	colorop["100"] = "FF"
+	colorop["95"] = "F2"
+	colorop["90"] =  "E6"
+	colorop["85"] = "D9"
+	colorop["80"] = "CC"
+	colorop["75"] = "BF"
+	colorop["70"] = "B3"
+	colorop["65"] = "A6"
+	colorop["60"] = "99"
+	colorop["55"] = "8C"
+	colorop["50"] = "80"
+	colorop["45"] = "73"
+	colorop["40"] = "66"
+	colorop["35"] = "59"
+	colorop["30"] = "4D"
+	colorop["25"] = "40"
+	colorop["20"] = "33"
+	colorop["15"] = "26"
+	colorop["10"] = "1A"
+	colorop["5"] = "0D"
+	colorop["0"] = "00"
+	
+	return colorop
 end function

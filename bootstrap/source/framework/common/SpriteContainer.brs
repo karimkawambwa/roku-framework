@@ -5,6 +5,11 @@ function AddSpriteContainerTo(this)
         }
     }
     
+    this.sprites.sprite = function(index)
+        if index < 0 or index >= m.Count() then return invalid
+        return m.x___.sprites[index]
+    end function
+    
     this.sprites.Count = function()
         return m.x___.sprites.Count()
     end function

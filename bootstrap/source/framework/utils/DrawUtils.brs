@@ -13,9 +13,10 @@ function DrawAll(array as Object, component as Object, duration = invalid as Dyn
 end function
 
 function RefreshScreen()
-    print "___________BEGIN__RefreshScreen___________________"
+    'print "___________BEGIN__RefreshScreen___________________"
     app = GetApp()
-    app.screen.Clear(ColorWithName("black"))
+    app.screen.Clear(ColorWithName("white"))
+    app.screen.SetAlphaEnable(true)
     
     currentController = AppNavigation().currentController()
     currentView = currentController.view
@@ -28,19 +29,19 @@ function RefreshScreen()
     
     app.compositor.DrawAll()
     
-    AddBorderToBitmap(app.screen, ColorWithName("red"))
+    'AddBorderToBitmap(app.screen, ColorWithName("red"))
     
     scaleX = app.roScreen.GetWidth() / app.screen.GetWidth()
     scaleY = app.roScreen.GetHeight() / app.screen.GetHeight()
     
-    print "roScreen : w = ", app.roScreen.GetWidth(), " h = ",app.roScreen.GetHeight()
-    print "screen : w = ", app.screen.GetWidth(), " h = ",app.screen.GetHeight()
-    print "scaleX : ", scaleX, " scaleY : ",scaleY
+    'print "roScreen : w = ", app.roScreen.GetWidth(), " h = ",app.roScreen.GetHeight()
+    'print "screen : w = ", app.screen.GetWidth(), " h = ",app.screen.GetHeight()
+    'print "scaleX : ", scaleX, " scaleY : ",scaleY
     
     region = CreateObject("roRegion", app.screen, 0, 0, app.screen.GetWidth(), app.screen.GetHeight())
     region.SetScaleMode(1)
     app.roScreen.DrawScaledObject(0, 0, scaleX, scaleY, region)
     app.roScreen.SwapBuffers()
     
-    print "___________END__RefreshScreen___________________"
+    'print "___________END__RefreshScreen___________________"
 end function

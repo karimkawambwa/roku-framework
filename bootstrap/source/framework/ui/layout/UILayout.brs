@@ -85,6 +85,7 @@ function UILayout(options)
     
     'Center point of layout
     this.center = function()
+        'TODO Calculate the center
         return {
             x : 0
             y : 0
@@ -162,6 +163,10 @@ function UILayout(options)
     end function
     
     this.prepareForLayout = function()
+        
+    end function
+    
+    this.didLayout = function()
         
     end function
     

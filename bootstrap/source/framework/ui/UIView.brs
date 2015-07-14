@@ -1,8 +1,11 @@
 function UIView(options, appendOptions = invalid as Object)
     this = UILayout(options) 'Add Layout Tools
     this.Append({
-        backgroundColor  : ColorWithName(options["background-color"])
+        backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
+        backgroundColor  : 255 'black
     })
+    
+    this.backgroundColor = ColorWithName(options["background-color"], ColorOpacity()[this.backgroundOpacity])
     
     AddSpriteContainerTo(this)
     
@@ -10,7 +13,6 @@ function UIView(options, appendOptions = invalid as Object)
     
     'Called by RefreshScreen
     this.draw = function(component as Object) as Boolean
-        m.sprites.SetDrawableFlag(m.isOpaque())
         return true
     end function
     
@@ -74,13 +76,20 @@ function UIView(options, appendOptions = invalid as Object)
         m.sprites.MoveOffset(x, y)
     end function
     
+    this.base_layout_prepareForLayout = this.prepareForLayout
     this.prepareForLayout = function()
-        
+        m.base_layout_prepareForLayout()
+    end function
+    
+    this.base_layout_didLayout = this.didLayout
+    this.didLayout = function()
+        m.base_layout_didLayout()
     end function
     
     this.initBackground = function()
         bitmap = CreateBitmap(m.width(), m.height())
         bitmap.Clear(m.backgroundColor)
+        
         region = CreateRegion(0, 0, m.width(), m.height(), bitmap)
         sprite = CreateSprite(m.x(), m.y(), region)
         

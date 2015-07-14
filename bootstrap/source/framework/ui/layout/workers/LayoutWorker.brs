@@ -85,5 +85,7 @@ function PerformLayout(args) as Boolean
         args.index   = obj.index
     end if
     
+    if view.didLayout <> invalid then view.didLayout()
+    
     return args.workStack.Count() = 0 and args.context.children.Count() <= args.index
 end function

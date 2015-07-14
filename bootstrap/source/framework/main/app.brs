@@ -8,6 +8,7 @@ function initApp()
         
         msgPort         : CreateObject("roMessagePort")
         deviceInfo      : CreateObject("roDeviceInfo")
+        fileSystem      : CreateObject("roFileSystem")
         
         'Action Safe Zone From Roku Docs
         'Will be set in initScreen
@@ -31,6 +32,7 @@ function initApp()
         isWideScreen  : false
     }
     
+    initFont(gg.app)
     initScreen(gg.app)
     initCompositor(gg.app)
     initTextureManager(gg.app)
