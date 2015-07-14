@@ -1,13 +1,7 @@
-<view id="main-layout" background-color="green">
+<view id="main-layout" background-color="slategray">
 
-	<view id="test-view" background-color="blue" width="50%" height="10%">
-		<view id="test-view-1" background-color="red" width="100" height="100">
-	
-		</view>
-	</view>
-	
-	<view id="test-view-0" background-color="yellow" background-opacity="50" width="250" height="250" constraints="T|B|0|==|100|test-view,L|L|0|==|100|test-view">
-		<label id="hurray-label" text="HURRAYYYY!" color="white" font="Open Sans" size="30" />
+	<view id="side-menu" background-color="black" width="25%" height="100%">
+		<label id="hurray-label" text="Roku" color="darkorange" font="Open Sans" size="30" align_v="" />
 	</view>
 	
 </view>

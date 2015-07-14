@@ -8,7 +8,7 @@ function AppScreen(command)
     if command = "width"
         return app.screen.GetWidth()
     else if command = "height"
-        return app.screen.GetWidth()
+        return app.screen.GetHeight()
     end if
     return invalid
 end function

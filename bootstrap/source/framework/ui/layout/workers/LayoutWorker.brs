@@ -73,7 +73,15 @@ function PerformLayout(args) as Boolean
         
         if m.z() >= view.z() then view.setZ(m.z()+1)
     end if
-
+    
+    if view.align.vertical or view.align.center
+        view.setX(m.x() + ((m.width()/2) - (view.width()/2)))
+    end if
+    
+    if view.align.horizontal or view.align.center
+        view.setY(m.x() + ((m.height()/2) - (view.height()/2)))
+    end if
+    
     if view.children.Count() <> 0
         args.workStack.Push({context : m, index : args.index})
         args.context = view

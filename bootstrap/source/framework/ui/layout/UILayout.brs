@@ -26,9 +26,9 @@ function UILayout(options)
         '               |
         '               |
         align   : {
-            vertical    : options.aling_v <> invalid
-            horizontal  : options.align_h <> invalid
-            center      : options.center <> invalid
+            vertical    : options["align_v"] <> invalid
+            horizontal  : options["align_h"] <> invalid
+            center      : options["center"] <> invalid
         }
 
         layout___pr : { 'don't access directly
