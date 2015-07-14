@@ -79,7 +79,7 @@ function PerformLayout(args) as Boolean
     end if
     
     if view.align.horizontal or view.align.center
-        view.setY(m.x() + ((m.height()/2) - (view.height()/2)))
+        view.setY(m.y() + ((m.height()/2) - (view.height()/2)))
     end if
     
     if view.children.Count() <> 0
