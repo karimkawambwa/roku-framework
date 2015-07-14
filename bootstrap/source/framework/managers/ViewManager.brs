@@ -26,9 +26,9 @@ function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid
     if w <> invalid then loadedView.setWidth(w)
     if h <> invalid then loadedView.setHeight(h)
     
-    loadedView.init()
-    
     LoadChildrenForView(loadedView, xml)
+    
+    loadedView.init()
     
     return loadedView
 end function
@@ -41,8 +41,8 @@ function LoadChildrenForView(parentView, parentXml)
             
             if view = invalid then return false
             
-            LoadChildrenForView(view, childXml)
             parentView.children.addChild(view)
+            LoadChildrenForView(view, childXml)
         end for
     end if
     
