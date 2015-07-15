@@ -153,8 +153,8 @@ function AddDimmensionControlsTo(this)
         offset_x = x - m.x()
         offset_y = y - m.y()
         
-        m.layout___pr.x = x
-        m.layout___pr.y = y
+        m.dim___pr.x = x
+        m.dim___pr.y = y
         
         m.sprites.MoveOffset(offset_x, offset_y)
     end function
@@ -162,8 +162,8 @@ function AddDimmensionControlsTo(this)
     'Call Render Screen After This
     this.MoveOffset = function(x, y)
         
-        m.layout___pr.x = m.layout___pr.x + x
-        m.layout___pr.y = m.layout___pr.y + y
+        m.dim___pr.x = m.dim___pr.x + x
+        m.dim___pr.y = m.dim___pr.y + y
         
         m.sprites.MoveOffset(x, y)
     end function
