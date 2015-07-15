@@ -29,76 +29,15 @@ function UIView(options, appendOptions = invalid as Object)
         backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
         backgroundColor  : 255 'black
     })
-    
+
+    'Other Views options subclassing
+    if appendOptions <> invalid then this.Append(appendOptions) 
+
     this.backgroundColor = ColorWithName(options["background-color"], ColorOpacity()[this.backgroundOpacity])
-    
-    AddSpriteContainerTo(this)
-    
-    if appendOptions <> invalid then this.Append(appendOptions) 'Other Views options
     
     'Called by RefreshScreen
     this.draw = function(component as Object) as Boolean
         return true
-    end function
-    
-    'Call Render Screen After This
-    this.setZ = function(z)
-        m.layout___pr.z = z
-        m.sprites.SetZ(z)
-    end function
-    
-    'Call Render Screen After This
-    this.addZ = function(z)
-        m.layout___pr.z = m.layout___pr.z + z
-        m.sprites.AddZ(z)
-    end function
-    
-    'Call Render Screen After This
-    this.setX = function(x)
-        offset = x - m.x()
-        
-        m.layout___pr.x = x
-        
-        m.sprites.MoveOffset(offset, 0)
-    end function
-    
-    'Call Render Screen After This
-    this.setY = function(y)
-        offset = y - m.y()
-        
-        m.layout___pr.y = y
-        
-        m.sprites.MoveOffset(0, offset)
-    end function
-    
-    'Call Render Screen After This
-    this.setHeight = function(height)
-        m.layout___pr.height = height
-    end function
-    
-    'Call Render Screen After This
-    this.setWidth = function(width)
-        m.layout___pr.width = width
-    end function
-    
-    'Call Render Screen After This
-    this.MoveTo = function(x, y)
-        offset_x = x - m.x()
-        offset_y = y - m.y()
-        
-        m.layout___pr.x = x
-        m.layout___pr.y = y
-        
-        m.sprites.MoveOffset(offset_x, offset_y)
-    end function
-    
-    'Call Render Screen After This
-    this.MoveOffset = function(x, y)
-        
-        m.layout___pr.x = m.layout___pr.x + x
-        m.layout___pr.y = m.layout___pr.y + y
-        
-        m.sprites.MoveOffset(x, y)
     end function
     
     this.base_layout_prepareForLayout = this.prepareForLayout

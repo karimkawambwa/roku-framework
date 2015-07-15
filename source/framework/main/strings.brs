@@ -21,11 +21,15 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function Config(app)
-    app.frameworkFolder = "pkg://source/framework/"
-    app.viewFolder = "pkg://source/views/"
-
-    ' Load colors so that we can use the function 
-    ' ColorWithName(name, opacity (optional))
-    app.colorNames = ParseJson(ReadAsciiFile(app.frameworkFolder+"ui/colors/colors.json"))
+function initStrings(app)
+	app.strings = {}
+	
+    jsons = app.fileSystem.Find("pkg://locale/strings", "(.json)")
+    jsons.ResetIndex()
+    json = jsons.GetIndex()
+    while json <> invalid
+    	locale = json.Mid(0, json.len()-5)
+    	app.strings[locale] = ParseJson(AsciiReadFile("pkg://locale/strings/"+json))
+    	json = jsons.GetIndex()
+    end while
 end function

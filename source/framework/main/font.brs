@@ -21,6 +21,9 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
+' This will perform a load for fonts that are in the fonts folder path : pkg://fonts/
+' It will perform a recursive load and registeration of the fonts
+' To add new fonts just drop the folder containing the .otf or .ttf font files in the fonts folder
 function initFont(app)
     app.fontRegistry = CreateObject("roFontRegistry")
     fonts = app.fileSystem.GetDirectoryListing("pkg://fonts/")

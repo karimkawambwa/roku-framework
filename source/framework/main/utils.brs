@@ -52,10 +52,18 @@ function ScheduleTask(task)
     return GetApp().async.scheduleTask(task)
 end function
 
+function ParseXML(str As String) As Dynamic
+    if str = invalid return invalid
+    xml = CreateObject("roXMLElement")
+    if not xml.Parse(str) return invalid
+    return xml
+end function
+
 function random(num_min As Integer, num_max As Integer) As Integer
     return (RND(0) * (num_max - num_min)) + num_min
 end function
 
+' Object should not have functions
 function copy(obj as Object) as Object
     return ParseJson(FormatJson(obj))
 end function

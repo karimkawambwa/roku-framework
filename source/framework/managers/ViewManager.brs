@@ -39,7 +39,12 @@ end function
 function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid, y = invalid, w = invalid, h = invalid)
     app = GetApp()
     
-    xmlString = ReadAsciiFile(app.viewFolder.Default+viewName+".xml")
+    'TODO Display Specific
+    xmlString = ReadAsciiFile(app.viewFolder+viewName+".xml")
+
+    'TODO :
+    'LocalizeViewXmlString(xmlString)
+
     xml = ParseXML(xmlString)
     
     loadedView = CreateUI(xml.GetName(), xml.GetAttributes())
@@ -70,11 +75,4 @@ function LoadChildrenForView(parentView, parentXml)
     end if
     
     return true
-end function
-
-function ParseXML(str As String) As Dynamic
-    if str = invalid return invalid
-    xml = CreateObject("roXMLElement")
-    if not xml.Parse(str) return invalid
-    return xml
 end function

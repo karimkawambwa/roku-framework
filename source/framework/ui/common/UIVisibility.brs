@@ -3,6 +3,8 @@
 
 ' Copyright (c) 2015 Karim Kawambwa
 
+' Author Karim Kawambwa
+
 ' Permission is hereby granted, free of charge, to any person obtaining a copy
 ' of this software and associated documentation files (the "Software"), to deal
 ' in the Software without restriction, including without limitation the rights
@@ -21,11 +23,41 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function Config(app)
-    app.frameworkFolder = "pkg://source/framework/"
-    app.viewFolder = "pkg://source/views/"
 
-    ' Load colors so that we can use the function 
-    ' ColorWithName(name, opacity (optional))
-    app.colorNames = ParseJson(ReadAsciiFile(app.frameworkFolder+"ui/colors/colors.json"))
+function AddVisibilityControlsTo(this)
+    this.Append({
+        visi___pr : { 'don't access directly
+            hidden : false
+            opaque : false
+        }
+    })
+    
+    this.isOpaque = function()
+        return m.visi___pr.opaque
+    end function
+    
+    this.isHidden = function()
+        return m.visi___pr.hidden
+    end function
+    
+    this.setOpaque = function(opaque = true as Boolean)
+        m.visi___pr.opaque = opaque
+        
+        m.sprites.SetDrawableFlag(opaque)
+
+        m.children.perform("setOpaque", opaque)
+        
+        'This will mostly be a visual change no need to update the layout
+        'Just refresh the screen automatically
+        RefreshScreen()
+    end function
+    
+    this.setHidden = function(hidden = true as Boolean)
+        m.visi___pr.hidden = hidden
+        m.setOpaque(true)
+        'Update Layout
+        'Hidden will make the view be treated as 0 width and 0 height
+        '
+    end function
+    
 end function

@@ -3,8 +3,6 @@
 
 ' Copyright (c) 2015 Karim Kawambwa
 
-' Author Karim Kawambwa
-
 ' Permission is hereby granted, free of charge, to any person obtaining a copy
 ' of this software and associated documentation files (the "Software"), to deal
 ' in the Software without restriction, including without limitation the rights
@@ -23,44 +21,54 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-
-function UIBase(options)
-    this = {
-        uibase___pr : { 'don't access directly
-            hidden : false
-            opaque : false
-        }
+' This will load up all the image paths in the image folder pkg://locale/images
+' It will perform a recursive loading of images in that folder
+' You will be able to load images with name using the function :
+' 
+' 		ImageWithName(name, options)
+'
+' Localization will be respected if specific
+' HD, SD and Wide Screens assets will be respected if specific
+function initImages(app)
+    app.imagePaths = {
+    	de_de : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
+    	en_gb : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
+    	en_us : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
+    	es_es : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
+    	fr_ca : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
+    	default : {
+    		hd : {}
+    		sd : {}
+    		wide : {}
+    		default : {}
+    	}
     }
-    
-    this.Append(options)
-    
-    this.isOpaque = function()
-        return m.uibase___pr.opaque
-    end function
-    
-    this.isHidden = function()
-        return m.uibase___pr.hidden
-    end function
-    
-    this.setOpaque = function(opaque = true as Boolean)
-        m.uibase___pr.opaque = opaque
-        
-        m.sprites.SetDrawableFlag(opaque)
 
-        m.children.perform("setOpaque", opaque)
-        
-        'This will mostly be a visual change no need to update the layout
-        'Just refresh the screen automatically
-        RefreshScreen()
-    end function
-    
-    this.setHidden = function(hidden = true as Boolean)
-        m.uibase___pr.hidden = hidden
-        m.setOpaque(true)
-        'Update Layout
-        'Hidden will make the view be treated as 0 width and 0 height
-        '
-    end function
-    
-    return this
+    paths = app.fileSystem.GetDirectoryListing("pkg://locale/images")
+    ' TODO : 
 end function
