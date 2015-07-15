@@ -21,10 +21,15 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function GridController()
-    this = BaseController({
-        
-    })
-    
-    return this
+function initStrings(app)
+	app.strings = {}
+	
+    jsons = app.fileSystem.Find("pkg://locale/strings", "(.json)")
+    jsons.ResetIndex()
+    json = jsons.GetIndex()
+    while json <> invalid
+    	locale = json.Mid(0, json.len()-5)
+    	app.strings[locale] = ParseJson(AsciiReadFile("pkg://locale/strings/"+json))
+    	json = jsons.GetIndex()
+    end while
 end function

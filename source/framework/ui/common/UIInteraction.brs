@@ -21,10 +21,17 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function GridController()
-    this = BaseController({
-        
-    })
+function AddUIInteractionTo(this)
+
+    this.onClickDown = function()
+    end function
     
-    return this
+    this.onClickRelease = function()
+    end function
+    
+    this.onFocus = function()
+    end function
+    
+    this.onUnFocus = function()
+    end function
 end function
