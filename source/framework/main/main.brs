@@ -31,8 +31,11 @@ function main()
     codes   = bslUniversalControlEventCodes()
     
     app.delegate.applicationLaunched()
+    
     while 1
         msg = app.msgPort.GetMessage()
+        
+        'app.events.dispatch(msg)
         
         currentController = mainNav.currentController()
         currentView = currentController.view
@@ -53,5 +56,7 @@ function main()
         
         app.async.performTasks() 'perfortasks to simulate asynchronous behaviour
     end while
+    
     app.delegate.applicationTerminated()
+    
 end function

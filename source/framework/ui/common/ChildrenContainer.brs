@@ -43,6 +43,15 @@ function AddChildrenContainerTo(this)
         return m.x___.childrenIds.Count()
     end function
     
+    this.children["each"] = function(ctxt, callback)
+        index = 0
+        for each id in m.x___.childrenIds
+            child = m.x___.children[id]
+            callback(index, child, ctxt)
+            index = index + 1
+        end for
+    end function
+    
     'Child must be an object with a unique ID
     this.children.addChild = function(child)
         m.x___.childrenIds.Push(child.id)

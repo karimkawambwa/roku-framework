@@ -22,7 +22,7 @@
 ' THE SOFTWARE.
 
 function AddUIInteractionTo(this)
-
+    
     this.onClickDown = function()
     end function
     

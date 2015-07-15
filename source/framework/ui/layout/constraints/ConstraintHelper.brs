@@ -58,16 +58,9 @@ function CreateConstraintsContainerFor(view, constraintsString)
         getViewConstrainedToSide(m.R, m.view)
     end function
     
-    'Begin parsing if string is valid
-    if constraintsString = invalid then return constraints
-    
-    reg1 = CreateObject("roRegex", "(\t|,)+", "")
-    reg2 = CreateObject("roRegex", "(\t|\|)+", "")
-    
-    tokens = reg1.Split(constraintsString)
-    
-    for each token in tokens
-        params = reg2.Split(token)
+    contraints.add = function(constraint)
+        reg = CreateObject("roRegex", "(\t|\|)+", "")
+        params = reg.Split(constraint)
         
         mySide      = params[0]
         toSide      = params[1]
@@ -76,8 +69,17 @@ function CreateConstraintsContainerFor(view, constraintsString)
         priority    = params[4]
         ref         = params[5]
         
-        constraint = UIContraint(ref, toSide, toInt(value), toInt(priority), flexibility)
-        constraints[mySide] = constraint
+        m[mySide] = UIContraint(ref, toSide, toInt(value), toInt(priority), flexibility)
+    end function
+    
+    'Begin parsing if string is valid
+    if constraintsString = invalid then return constraints
+    
+    reg1 = CreateObject("roRegex", "(\t|,)+", "")
+    
+    tokens = reg1.Split(constraintsString)
+    for each token in tokens
+        constraints.add(token)
     end for
     
     return constraints

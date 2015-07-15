@@ -23,5 +23,33 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function UIScrollView()
+function UIScrollView(options, appendOptions = {} as Object)
+    this = UIView(options, {
+    })
+
+    'Other Views options subclassing
+    if appendOptions <> invalid then this.Append(appendOptions) 
+    
+    ' @Override UIVIew init
+    this.base_view_Init = this.init
+    this.init = function()
+        m.base_view_Init()
+    end function
+    
+    this.scrollToTop = function()
+    end function
+    
+    this.scrollToBottom = function()
+    end function
+    
+    this.scrollToLeft = function()
+    end function
+    
+    this.scrollToRight = function()
+    end function
+    
+    this.scrollOffset = function(x, y, animated = true as Boolean)
+    end function
+    
+    return this
 end function

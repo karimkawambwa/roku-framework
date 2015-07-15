@@ -21,7 +21,7 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function UILayout(options)
+function UILayout(options, appendOptions = {} as Object)
     app = GetApp()
     this = {
         id  :  if_else(options.id <> invalid, options.id, uniqueid())
@@ -46,10 +46,13 @@ function UILayout(options)
             center      : options["center"] <> invalid
         }
     }
+    
+    'Other Views options subclassing
+    if appendOptions <> invalid then this.Append(appendOptions) 
 
     AddChildrenContainerTo(this)
     AddVisibilityControlsTo(this)
-    AddDimensionControlsTo(this)
+    AddDimensionControlsTo(this, options)
     
     'Careful not to Override this method!
     this.movedToParent = function(parent)

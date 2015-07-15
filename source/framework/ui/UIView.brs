@@ -23,20 +23,35 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function UIView(options, appendOptions = invalid as Object)
-    this = UILayout(options) 'Add Layout Tools
-    this.Append({
+function UIView(options, appendOptions = {} as Object)
+    this = UILayout(options, {
+        ' Each view will have a compositor 
+        ' This will allow anything beyoud the bounds of the view to be clipped
+        viewCompositor : invalid
+        
         backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
         backgroundColor  : 255 'black
     })
-
+    
+    AddSpriteContainerTo(this)
+    
     'Other Views options subclassing
     if appendOptions <> invalid then this.Append(appendOptions) 
 
     this.backgroundColor = ColorWithName(options["background-color"], ColorOpacity()[this.backgroundOpacity])
     
-    'Called by RefreshScreen
-    this.draw = function(component as Object) as Boolean
+    ' Called by RefreshScreen
+    ' Carefull Overriding this method
+    this.draw = function(component as Object) as Boolean        
+        sprite = m.sprites.sprite(0)
+        bitmap = sprite.GetRegion().GetBitmap()
+        bitmap.Clear(m.backgroundColor)
+        
+        'Draw the view compositor sprites
+        if m.viewCompositor <> invalid 
+            m.viewCompositor.DrawAll()
+        end if
+        
         return true
     end function
     
@@ -50,15 +65,12 @@ function UIView(options, appendOptions = invalid as Object)
         m.base_layout_didLayout()
     end function
     
-    this.initBackground = function()
-        bitmap = CreateBitmap(m.width(), m.height())
-        bitmap.Clear(m.backgroundColor)
-        
-        region = CreateRegion(0, 0, m.width(), m.height(), bitmap)
-        sprite = CreateSprite(m.x(), m.y(), region)
-        
-        m.sprites.Add(sprite)
-        m.sprites.SetDrawableFlag(m.isOpaque())
+    ' @Override child insertion
+    this.override_ChildrenAdd = this.children.Add
+    this.children.Add = function(child)
+        ' Make child use the parent compositor
+        child.viewCompositor = m.viewCompositor
+        m.override_ChildrenAdd(child)
     end function
     
     this.setBackgroundColor = function(color as Integer)
@@ -66,9 +78,38 @@ function UIView(options, appendOptions = invalid as Object)
         if m.bitmap = invalid then m.initBackground()
     end function
     
+    ' Should be invoked once
     this.init = function()
-        if m.backgroundColor <> invalid then m.initBackground()
-        print "INIT [ "+ m.id+" ]"
+        m.initBackground()
+    end function
+    
+    ' Should be invoked once
+    this.initViewCompositor = function()
+        m.viewCompositor = CreateObject("roCompositor")
+        
+        sprite = m.sprites.sprite(0)
+        bitmap = sprite.GetRegion().GetBitmap()
+        bitmap.SetAlphaEnable(true)
+    
+        m.viewCompositor.SetDrawTo(bitmap, 0)
+    end function
+    
+    ' Should be invoked once
+    this.initBackground = function()
+        bitmap = CreateBitmap(m.width(), m.height())
+        bitmap.Clear(m.backgroundColor)
+        
+        region = CreateRegion(0, 0, m.width(), m.height(), bitmap)
+        
+        ' If the viewCompositor is invalid then the app compositor will be used
+        ' Only the first view in the hirerchy should use the app compositor
+        ' See Drawing.md for more information
+        sprite = CreateSprite(m.x(), m.y(), region, m.viewCompositor)
+        
+        ' This Sprite 0 is the main view bitmap
+        ' Everything belonging to this view will be draw on this
+        m.sprites.Add(sprite)
+        m.sprites.SetDrawableFlag(m.isOpaque())
     end function
     
     return this

@@ -60,6 +60,7 @@ function initApp()
     initImages(gg.app)
     initStrings(gg.app)
     initCompositor(gg.app)
+    initEventReceiver(gg.app)
     initTextureManager(gg.app)
     initAsyncTaskManager(gg.app)
     

@@ -43,15 +43,17 @@ function RefreshScreen()
     app.screen.Clear(ColorWithName("white"))
     app.screen.SetAlphaEnable(true)
     
-    currentController = AppNavigation().currentController()
-    currentView = currentController.view
+    currCtrlr = AppNavigation().currentController()
+    currView = currCtrlr.view
     
-    if currentView <> invalid then
-        currentView.draw(app.screen)
+    if currView <> invalid then
+        currView.draw(app.screen)
     else
-        print "Controller [ "+currentController+" ] : has and invalid view"
+        print "Invalid View Error Controller [ ",currCtrlr," ]"
     end if
     
+    ' Draw the app compositor sprites
+    ' Holds to level Views
     app.compositor.DrawAll()
     
     'AddBorderToBitmap(app.screen, ColorWithName("red"))

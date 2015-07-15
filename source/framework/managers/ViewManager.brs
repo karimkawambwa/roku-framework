@@ -61,6 +61,12 @@ function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid
     return loadedView
 end function
 
+function ViewFromXml(xml)
+    view = CreateUI(xml.GetName(), xml.GetAttributes())
+    LoadChildrenForView(view, xml)
+    return view
+end function
+
 function LoadChildrenForView(parentView, parentXml)
     childrenXml = parentXml.getbody()
     if childrenXml <> invalid
@@ -70,7 +76,14 @@ function LoadChildrenForView(parentView, parentXml)
             if view = invalid then return false
             
             parentView.children.addChild(view)
-            LoadChildrenForView(view, childXml)
+            
+            if childXml.GetName() = "list" and childXml.GetAttributes()["static"] = "false"
+                view.prototypeItems = childXml.getbody()
+            else if childXml.GetName() = "grid" and childXml.GetAttributes()["static"] = "false"
+                view.prototypeItems = childXml.getbody()
+            else
+                LoadChildrenForView(view, childXml)
+            end if
         end for
     end if
     

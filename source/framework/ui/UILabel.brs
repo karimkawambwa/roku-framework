@@ -38,6 +38,7 @@ function UILabel(options)
         fontname : options.font
     })
     
+    ' @Override UIVIew init
     this.base_view_Init = this.init
     this.init = function()
         m.font = FontWithNameAndSize(m.fontname, m.size)
@@ -56,6 +57,7 @@ function UILabel(options)
         end if
     end function
     
+    ' @Override UIVIew prepareForLayout
     this.base_view_prepareForLayout = this.prepareForLayout
     this.prepareForLayout = function()
         m.sizeToFit()
@@ -63,6 +65,7 @@ function UILabel(options)
         m.base_view_prepareForLayout()
     end function
     
+    ' @Override UIVIew didLayout
     this.base_view_didLayout = this.didLayout
     this.didLayout = function()
         m.base_view_didLayout()

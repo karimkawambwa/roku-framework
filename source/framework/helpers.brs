@@ -41,7 +41,11 @@ function CreateRegion(x, y, width, height, component)
     return CreateObject("roRegion", component, x, y, width, height)
 end function
 
-function CreateSprite(x, y, region)
+function CreateSprite(x, y, region, customCompositor = invalid as Object)
+    if customCompositor <> invalid then
+        return customCompositor.NewSprite(x, y, region)
+    end if
+    
     return GetApp().compositor.NewSprite(x, y, region)
 end function
 

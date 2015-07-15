@@ -29,7 +29,7 @@ function initStrings(app)
     json = jsons.GetIndex()
     while json <> invalid
     	locale = json.Mid(0, json.len()-5)
-    	app.strings[locale] = ParseJson(AsciiReadFile("pkg://locale/strings/"+json))
+    	app.strings[locale] = ParseJson(ReadAsciiFile("pkg://locale/strings/"+json))
     	json = jsons.GetIndex()
     end while
 end function

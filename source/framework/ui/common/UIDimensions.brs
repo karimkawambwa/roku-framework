@@ -24,7 +24,7 @@
 ' THE SOFTWARE.
 
 
-function AddDimmensionControlsTo(this)
+function AddDimensionControlsTo(this, options)
 	this.Append({
 		dim___pr : { 'don't access directly
             x               :   if_else(options.x <> invalid, toInt(options.x), 0)
@@ -82,11 +82,11 @@ function AddDimmensionControlsTo(this)
     end function
     
     this.width = function()
-        return if_else(m.hidden(), 0, m.dim___pr.width)
+        return if_else(m.isHidden(), 0, m.dim___pr.width)
     end function
     
     this.height = function()
-        return if_else(m.hidden(), 0, m.dim___pr.height)
+        return if_else(m.isHidden(), 0, m.dim___pr.height)
     end function
 
     'Call Render Screen After This
