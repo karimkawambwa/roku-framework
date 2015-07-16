@@ -94,7 +94,7 @@ function AddChildrenContainerTo(this)
         count = m.x___.childrenIds.Count()
         if count = 0 then return invalid
         if index >= count or index < 0 then
-            print "Error View [ "+m.id+" ] : Trying to access child at index ["+index+"] out of bounds"
+            print "Error : Trying to access child at index [",index,"] out of bounds"
             return invalid
         end if
         
