@@ -81,9 +81,9 @@ function LoadChildrenForView(parentView, parentXml)
             
             parentView.children.addChild(view)
             
-            if childXml.GetName() = "list" and childXml.GetAttributes()["static"] = "false"
+            if childXml.GetName() = "list:view" and childXml.GetAttributes()["static"] = "false"
                 view.prototypeItems = childXml.getbody()
-            else if childXml.GetName() = "grid" and childXml.GetAttributes()["static"] = "false"
+            else if childXml.GetName() = "grid:view" and childXml.GetAttributes()["static"] = "false"
                 view.prototypeItems = childXml.getbody()
             else
                 LoadChildrenForView(view, childXml)
