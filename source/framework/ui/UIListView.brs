@@ -25,6 +25,7 @@
 
 function UIListView(options)
     this = UIScrollView(options, {
+        dataLoaded : false
         
         numberOfItems : 0
         index : -1
@@ -52,7 +53,11 @@ function UIListView(options)
         if m.prototypeItems <> invalid
             for each e in m.prototypeItems
                 if e.GetAttributes()["id"] = id
-                    return ViewFromXml(e)
+                    view = ViewFromXml(e)
+                    if view <> invalid
+                        view.id = uniqueid(view.id)
+                        return view
+                    end if
                 end if
             end for
         end if
@@ -60,7 +65,13 @@ function UIListView(options)
     end function
     
     this.prepareForLayout = function() as Void
-        if m.dataSource <> invalid and not m.isStatic then
+       m.dataLoaded = m.loadData()
+    end function
+    
+    this.loadData = function() as Boolean
+       if m.dataLoaded then return true
+        
+       if m.dataSource <> invalid and not m.isStatic then
             availableSpace = if_else(m.layout = "horizontal", m.width(), m.height())
             m.numberOfItems = m.dataSource.numberOfItemsForList(m)
             
@@ -79,16 +90,16 @@ function UIListView(options)
                     takenSpace = takenSpace + item.width()
                     
                     if index <> 0
-                        m.items.item(index).constraints.add("T|T|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)
-                        m.items.item(index).constraints.add("L|R|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)
+                        m.items.item(index).constraints.add("T|T|"+m.spacing.toStr()+"|==|100|"+m.items.item(index-1).id)
+                        m.items.item(index).constraints.add("L|R|"+m.spacing.toStr()+"|==|100|"+m.items.item(index-1).id)
                     end if
                 else
                     item.setWidth(m.width()) 'fix to list width
                     takenSpace = takenSpace + item.height()
                     
                     if index <> 0
-                        m.items.item(index).constraints.add("T|B|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)
-                        m.items.item(index).constraints.add("L|L|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)
+                        m.items.item(index).constraints.add("T|B|"+m.spacing.toStr()+"|==|100|"+m.items.item(index-1).id)
+                        m.items.item(index).constraints.add("L|L|"+m.spacing.toStr()+"|==|100|"+m.items.item(index-1).id)
                     end if
                 end if
                 
@@ -97,8 +108,16 @@ function UIListView(options)
                 if availableSpace <= 0 then exit for
             end for
             
-            if m.items.count > 0 then m.index = 0
+            if m.items.count() > 0 then m.index = 0
+            
+            return true
         end if
+        
+        return false
+    end function
+    
+    this.reloadData = function()
+        'TODO :
     end function
     
     return this

@@ -42,15 +42,15 @@ function UIView(options, appendOptions = {} as Object)
     
     ' Called by RefreshScreen
     ' Carefull Overriding this method
-    this.draw = function(component as Object) as Boolean        
+    this.draw = function(component as Object) as Boolean
+        m.children.perform("draw", [component])
+        
         sprite = m.sprites.sprite(0)
         bitmap = sprite.GetRegion().GetBitmap()
         bitmap.Clear(m.backgroundColor)
         
         'Draw the view compositor sprites
-        if m.viewCompositor <> invalid 
-            m.viewCompositor.DrawAll()
-        end if
+        if m.viewCompositor <> invalid m.viewCompositor.DrawAll()
         
         return true
     end function
@@ -72,13 +72,13 @@ function UIView(options, appendOptions = {} as Object)
     
     ' Should be invoked once
     this.init = function()
-        ' The order matters!!!!
         m.initBackground()
-        m.initViewCompositor()
     end function
     
     ' Should be invoked once
-    this.initViewCompositor = function()
+    this.initViewCompositor = function() as Void
+        if m.viewCompositor <> invalid then return
+        
         m.viewCompositor = CreateObject("roCompositor")
         
         sprite = m.sprites.sprite(0)
@@ -89,7 +89,9 @@ function UIView(options, appendOptions = {} as Object)
     end function
     
     ' Should be invoked once
-    this.initBackground = function()
+    this.initBackground = function() as Void
+        if m.sprites.count() > 0 then return
+        
         bitmap = CreateBitmap(m.width(), m.height())
         bitmap.Clear(m.backgroundColor)
         

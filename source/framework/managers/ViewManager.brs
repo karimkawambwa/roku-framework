@@ -58,9 +58,10 @@ function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid
     if w <> invalid then loadedView.setWidth(w)
     if h <> invalid then loadedView.setHeight(h)
     
-    LoadChildrenForView(loadedView, xml)
+    ' This means that its the main window
+    loadedView.movedToParent(invalid)
     
-    loadedView.init()
+    LoadChildrenForView(loadedView, xml)
     
     return loadedView
 end function

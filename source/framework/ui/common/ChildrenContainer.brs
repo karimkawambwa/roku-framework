@@ -32,13 +32,17 @@ function AddChildrenContainerTo(this)
         }
     })
 
-    this.children.perform = function(funcName, arg)
+    this.children.perform = function(funcName, args)
         for each id in m.x___.childrenIds
             child = m.x___.children[id]
-            if child[funcName] <> invalid then child[funcName](arg)
+            if args = invalid or args.count() = 0
+                if child[funcName] <> invalid then child[funcName]()
+            else if args.count() = 1
+                if child[funcName] <> invalid then child[funcName](args[0])
+            end if
         end for
     end function
-
+    
     this.children.Count = function()
         return m.x___.childrenIds.Count()
     end function
@@ -58,6 +62,10 @@ function AddChildrenContainerTo(this)
         m.x___.children[child.id]= child
         
         child.parent = m.parent
+        
+        'Initialize if invalid
+        m.parent.initViewCompositor()
+        
         child.viewCompositor = m.parent.viewCompositor
         if child.movedToParent <> invalid then child.movedToParent(m.parent)
     end function

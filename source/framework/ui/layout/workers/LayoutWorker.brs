@@ -34,7 +34,10 @@ function PerformLayout(args) as Boolean
     view = m.children.childAtIndex(args.index)
     args.index = args.index + 1
 
-    if view = invalid then 
+    if view = invalid then
+        print "Layout Bailed!!!"
+        print "View ID : "+ m.id
+        print "Layout Child Index : "+ (args.index -1).toStr()
         return true
     end if
     
@@ -54,6 +57,8 @@ function PerformLayout(args) as Boolean
     view.setMaxWidth(m.width() - offset)
     
     view.prepareForLayout()
+    
+    print "performing layout for view : "+ view.id
     
     if view.constraints <> invalid and view.constraints.Count() > 0
 
@@ -107,12 +112,30 @@ function PerformLayout(args) as Boolean
         view.setY(m.y() + ((m.height()/2) - (view.height()/2)))
     end if
     
+    print "dimmensions :"
+    print view.dim___pr
+    
     if view.children.Count() <> 0
         args.workStack.Push({context : m, index : args.index})
         args.context = view
         args.index   = 0
-    else if m.children.Count() <= args.index and args.workStack.Count() > 0 then
-        obj = args.workStack.Pop()
+        
+        m = view
+    end if 
+    
+    if args.index >= m.children.Count() and args.workStack.Count() > 0 then
+        
+        ' From the work Stack get the obj that still needs layout work done
+        ' This does a recursive search
+        getWork = function(worKStack as Object, getWork as Function)
+            obj = workStack.Pop()
+            if obj.index >= obj.context.children.Count() and workStack.Count() > 0
+                return getWork(worKStack, getWork) 
+            end if
+            return obj
+        end function
+        
+        obj = getWork(args.worKStack, getWork)
         
         args.context = obj.context
         args.index   = obj.index
@@ -122,5 +145,5 @@ function PerformLayout(args) as Boolean
     
     if view.didLayout <> invalid then view.didLayout()
     
-    return args.workStack.Count() = 0 and m.children.Count() <= args.index
+    return args.workStack.Count() = 0 and args.index >= m.children.Count()
 end function

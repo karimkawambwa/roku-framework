@@ -56,7 +56,7 @@ function UILayout(options, appendOptions = {} as Object)
     
     'Careful not to Override this method!
     this.movedToParent = function(parent)
-        m.setupDimensions()
+        if parent <> invalid then m.setupDimensions()
         
         m.init()
     end function

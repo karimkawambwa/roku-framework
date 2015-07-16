@@ -45,7 +45,7 @@ function AddVisibilityControlsTo(this)
         
         m.sprites.SetDrawableFlag(opaque)
 
-        m.children.perform("setOpaque", opaque)
+        m.children.perform("setOpaque", [opaque])
         
         'This will mostly be a visual change no need to update the layout
         'Just refresh the screen automatically

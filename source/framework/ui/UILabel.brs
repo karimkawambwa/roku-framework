@@ -50,6 +50,10 @@ function UILabel(options)
         
         m.base_view_Init()
         
+        m.drawText()
+    end function
+    
+    this.drawText = function()
         bitmap =  m.sprites.sprite(0).GetRegion().GetBitmap()
         if m.font <> invalid then
             drewText = bitmap.DrawText(m.text, 0, 0, m.color, m.font)
@@ -78,8 +82,11 @@ function UILabel(options)
         m.setHeight(GetFontHeight(m.font))
     end function
     
+    this.base_view_Draw = this.draw
     this.draw = function(component as Object) as Boolean
-        stop
+        m.base_view_Draw(component)
+        
+        m.drawText()
         return true
     end function
     
