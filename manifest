@@ -1,7 +1,7 @@
 title=Roku Template
 major_version=1
 minor_version=0
-build_version=313
+build_version=321
 mm_icon_focus_hd=pkg:/locale/default/images/icon_focus_hd.png
 mm_icon_side_hd=pkg:/locale/default/images/icon_side_hd.png
 mm_icon_focus_sd=pkg:/locale/default/images/icon_focus_sd.png

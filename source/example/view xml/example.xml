@@ -1,22 +1,22 @@
-<view id="main-layout" background-color="white">
+<example:view id="main-layout" background-color="white">
 
 	<view id="side-menu" background-color="black" width="25%" height="100%">
 		<label id="hurray-label" text="Menu" color="darkorange" font="Open Sans" size="30" />
 		
 		<view id="separator" background-color="darkorange" width="100%" height="2" constraints="T|B|10|==|100|hurray-label"/>
 		
-		<list id="example-list" static="false" width="100%" height="50%" constraints="T|B|0|==|100|separator">
+		<list:view id="example-list" static="false" width="100%" height="50%" constraints="T|B|0|==|100|separator">
 			<view id="prototype-example-item-0" background-color="darkorange" height="10">
 				
 			</view>
 			<view id="prototype-example-item-1" background-color="darkorange" height="10">
 				
 			</view>
-		</list>
+		</list:view>
 	</view>
 	
 	<view id="main-content" background-color="slategrey" width="75%" height="100%" constraints="L|R|0|==|100|side-menu">
 		<label id="hurray-label" text="Content Goes Here" color="darkorange" font="Open Sans" size="40" center="true" />
 	</view>
 	
-</view>
+</example:view>

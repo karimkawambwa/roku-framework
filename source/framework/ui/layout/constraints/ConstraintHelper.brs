@@ -58,7 +58,7 @@ function CreateConstraintsContainerFor(view, constraintsString)
         getViewConstrainedToSide(m.R, m.view)
     end function
     
-    contraints.add = function(constraint)
+    constraints.add = function(constraint)
         reg = CreateObject("roRegex", "(\t|\|)+", "")
         params = reg.Split(constraint)
         

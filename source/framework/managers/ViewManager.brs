@@ -22,16 +22,20 @@
 ' THE SOFTWARE.
 
 function CreateUI(type_, options) as Object
+    app = GetApp()
     ui = {
         button      : UIButton
         label       : UILabel
         image       : UIImage
         textArea    : UITextArea
         view        : UIView
-        gridView    : UIGridView
-        listView    : UIListView
-        scrollView  : UIScrollView
     }
+    
+    ui["list:view"] = UIListView
+    ui["grid:view"] = UIGridView
+    ui["scroll:view"] = UIScrollView
+    
+    ui.Append(app.customUI)
     
     return ui[type_](options)
 end function

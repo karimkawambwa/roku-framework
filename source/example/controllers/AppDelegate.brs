@@ -29,7 +29,11 @@ function AppDelegate()
         ' You can set these as you want
         ' Pont to the correct locations
         app.frameworkFolder = "pkg://source/framework/"
-        app.viewFolder = "pkg://source/example/views/" 
+        app.viewFolder = "pkg://source/example/view xml/"
+        
+        app.customUI = {}
+        app.customUI["example:view"] = ExampleView
+        
     end function
     
     this.applicationLaunched = function()

@@ -25,7 +25,7 @@ function Config(app)
     app.frameworkFolder = "pkg://source/framework/"
     app.viewFolder = "pkg://source/views/"
     
-    app.delegate.config()
+    app.delegate.config(app)
 
     ' Load colors so that we can use the function 
     ' ColorWithName(name, opacity (optional))
