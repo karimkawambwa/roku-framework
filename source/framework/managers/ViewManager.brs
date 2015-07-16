@@ -66,6 +66,8 @@ function LoadViewNamed(viewName, displaySpecific = false as Boolean, x = invalid
 end function
 
 function ViewFromXml(xml)
+    if xml = invalid then return invalid
+    
     view = CreateUI(xml.GetName(), xml.GetAttributes())
     LoadChildrenForView(view, xml)
     return view

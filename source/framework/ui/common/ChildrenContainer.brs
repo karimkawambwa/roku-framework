@@ -58,6 +58,7 @@ function AddChildrenContainerTo(this)
         m.x___.children[child.id]= child
         
         child.parent = m.parent
+        child.viewCompositor = m.parent.viewCompositor
         if child.movedToParent <> invalid then child.movedToParent(m.parent)
     end function
     

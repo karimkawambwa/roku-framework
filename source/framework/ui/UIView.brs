@@ -65,14 +65,6 @@ function UIView(options, appendOptions = {} as Object)
         m.base_layout_didLayout()
     end function
     
-    ' @Override child insertion
-    this.override_ChildrenAdd = this.children.Add
-    this.children.Add = function(child)
-        ' Make child use the parent compositor
-        child.viewCompositor = m.viewCompositor
-        m.override_ChildrenAdd(child)
-    end function
-    
     this.setBackgroundColor = function(color as Integer)
         m.backgroundColor = color
         if m.bitmap = invalid then m.initBackground()
@@ -80,7 +72,9 @@ function UIView(options, appendOptions = {} as Object)
     
     ' Should be invoked once
     this.init = function()
+        ' The order matters!!!!
         m.initBackground()
+        m.initViewCompositor()
     end function
     
     ' Should be invoked once

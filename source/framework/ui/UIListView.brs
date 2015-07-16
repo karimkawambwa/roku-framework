@@ -33,25 +33,34 @@ function UIListView(options)
         layout : if_else(options.layout = "horizontal", "horizontal", "vertical")
         spacing : if_else(options.spacing <> invalid, toInt(options.spacing), 0)
         
-        prototypeItem : options.prototypeItem
+        prototypeItems : invalid
         dataSource : invalid
     })
     
-    this.items = {
+    ' Items Are Children
+    this.items = this.children
+    
+    ' Purely For Naming Convection
+    this.items.Append({
         each : this.children["each"]
         count : this.children.count
         item : this.children.childAtIndex
-        add : this.children.add
-    }
+        add : this.children.addchild
+    })
     
-    this.itemFromPrototype = function(id)
-        if m.prototypeItem <> invalid
-            
+    this.itemFromPrototypeWithId = function(id)
+        if m.prototypeItems <> invalid
+            for each e in m.prototypeItems
+                if e.GetAttributes()["id"] = id
+                    return ViewFromXml(e)
+                end if
+            end for
         end if
+        return invalid
     end function
     
     this.prepareForLayout = function() as Void
-        if m.dataSource <> invalid then
+        if m.dataSource <> invalid and not m.isStatic then
             availableSpace = if_else(m.layout = "horizontal", m.width(), m.height())
             m.numberOfItems = m.dataSource.numberOfItemsForList(m)
             
@@ -65,9 +74,9 @@ function UIListView(options)
                 
                 takenSpace = m.spacing
                 m.items.add(item)
-                if layout = "horizontal"
+                if m.layout = "horizontal"
                     item.setHeight(m.height())'fix to list height
-                    takenSpace = takenSpace + item.width
+                    takenSpace = takenSpace + item.width()
                     
                     if index <> 0
                         m.items.item(index).constraints.add("T|T|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)
@@ -75,7 +84,7 @@ function UIListView(options)
                     end if
                 else
                     item.setWidth(m.width()) 'fix to list width
-                    takenSpace = takenSpace + item.height
+                    takenSpace = takenSpace + item.height()
                     
                     if index <> 0
                         m.items.item(index).constraints.add("T|B|"+toStr(spacing)+"|==|100|"+m.items.item(index-1).id)

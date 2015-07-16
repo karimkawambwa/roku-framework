@@ -35,10 +35,26 @@ function ExampleController()
     
     this.viewLoaded = function()
         'm.view is not invalid but not visible
+        m.sideMenu = m.view.children.childWithId("side-menu")
+        m.exampleListView = m.sideMenu.children.childWithId("example-list")
+        m.exampleListView.dataSource = m
     end function
     
     this.viewAppeared = function()
         'm.view is not invalid and is visible
+    end function
+    
+    ' @required ListView Datasource Call
+    ' ExampleListView Datasource Calls
+    ' These Must be implimented for none static ListView
+    this.numberOfItemsForList = function(listView)
+        return 3
+    end function
+    
+    ' @required ListView Datasource Call
+    ' Return a view
+    this.itemForListAtIndex = function(listView, index)
+        return listView.itemFromPrototypeWithId("prototype-example-item-0")
     end function
     
     this.baseDispose = this.dispose
