@@ -95,8 +95,6 @@ function UILayout(options, appendOptions = {} as Object)
                     if m.onComplete <> invalid
                         m.onComplete(m.onCompleteContext)
                     end if
-            
-                    RefreshScreen()
                 end if
             end function
         })

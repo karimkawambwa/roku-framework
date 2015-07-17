@@ -28,6 +28,7 @@ function UIView(options, appendOptions = {} as Object)
         ' Each view will have a compositor 
         ' This will allow anything beyoud the bounds of the view to be clipped
         viewCompositor : invalid
+        parentCompositor : invalid
         
         backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
         backgroundColor  : 255 'black
@@ -43,8 +44,8 @@ function UIView(options, appendOptions = {} as Object)
     ' Called by RefreshScreen
     ' Carefull Overriding this method
     this.draw = function(component as Object) as Boolean
-        m.children.perform("draw", [component])
-        
+        'm.children.perform("draw", [component])
+        print "Drawing : " + m.id
         sprite = m.sprites.sprite(0)
         bitmap = sprite.GetRegion().GetBitmap()
         bitmap.Clear(m.backgroundColor)
@@ -79,6 +80,8 @@ function UIView(options, appendOptions = {} as Object)
     this.initViewCompositor = function() as Void
         if m.viewCompositor <> invalid then return
         
+        print "Created Compositor for : "+m.id
+        
         m.viewCompositor = CreateObject("roCompositor")
         
         sprite = m.sprites.sprite(0)
@@ -100,7 +103,7 @@ function UIView(options, appendOptions = {} as Object)
         ' If the viewCompositor is invalid then the app compositor will be used
         ' Only the first view in the hirerchy should use the app compositor
         ' See Drawing.md for more information
-        sprite = CreateSprite(m.x(), m.y(), region, m.viewCompositor)
+        sprite = CreateSprite(m.x(), m.y(), region, m.parentCompositor)
         
         ' This Sprite 0 is the main view bitmap
         ' Everything belonging to this view will be draw on this

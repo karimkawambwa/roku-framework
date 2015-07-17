@@ -42,10 +42,8 @@ function CreateRegion(x, y, width, height, component)
 end function
 
 function CreateSprite(x, y, region, customCompositor = invalid as Object)
-    if customCompositor <> invalid then
-        return customCompositor.NewSprite(x, y, region)
-    end if
-    
+    if customCompositor <> invalid then return customCompositor.NewSprite(x, y, region)
+    print "Used main compositor"
     return GetApp().compositor.NewSprite(x, y, region)
 end function
 

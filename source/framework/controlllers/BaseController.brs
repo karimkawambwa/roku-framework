@@ -40,6 +40,7 @@ function BaseController(appendParams as Object)
             m.view = LoadViewNamed(m.viewName, m.displayTypeSpecific, 0, 0, AppScreen("width"), AppScreen("height"))
         else
             m.view = UIView()
+            m.view.parentCompositor = GetApp().compositor
             ' This means that its the main window
             m.view.movedToParent(invalid)
         end if
