@@ -49,7 +49,8 @@ function UIView(options, appendOptions = {} as Object)
         
         m.children.perform("draw", [bitmap])
         
-        'AddBorderToBitmap(bitmap, ColorWithName("red"))
+        print m.id+" drawable : ", sprite.GetDrawableFlag() 
+        'AddBorderToBitmap(bitmap, ColorWithName("red"), 1)
         
         'Draw the view compositor sprites
         if m.compositor <> invalid then

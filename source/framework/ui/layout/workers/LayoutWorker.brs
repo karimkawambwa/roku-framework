@@ -50,8 +50,8 @@ function PerformLayout(args) as Boolean
     end if
     
     'default x and y if provide
-    view.setX(m.x() + view.relative_position.x)
-    view.setY(m.y() + view.relative_position.y)
+    'view.setX(m.x() + view.relative_position.x)
+    'view.setY(m.y() + view.relative_position.y)
     
     offset = view.x() - m.x() 'x that would place view outside layout area
     view.setMaxWidth(m.width() - offset)

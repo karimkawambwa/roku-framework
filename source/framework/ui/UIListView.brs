@@ -84,7 +84,9 @@ function UIListView(options)
                 end if
                 
                 takenSpace = m.spacing
+                
                 m.items.add(item)
+                
                 if m.layout = "horizontal"
                     item.setHeight(m.height())'fix to list height
                     takenSpace = takenSpace + item.width()
