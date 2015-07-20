@@ -24,7 +24,7 @@
 function ExampleController()
     this = BaseController({
         id : "ExampleController" 'Custom ID, comment for random Id
-        viewName : "example"
+        viewName : "example-grid"
     })
     
     this.baseInit = this.init
@@ -35,9 +35,9 @@ function ExampleController()
     
     this.viewLoaded = function()
         'm.view is not invalid but not visible
-        m.sideMenu = m.view.children.childWithId("side-menu")
-        m.exampleListView = m.sideMenu.children.childWithId("example-list")
-        m.exampleListView.dataSource = m
+        'm.sideMenu = m.view.children.childWithId("side-menu")
+        'm.exampleListView = m.sideMenu.children.childWithId("example-list")
+        'm.exampleListView.dataSource = m
     end function
     
     this.viewAppeared = function()

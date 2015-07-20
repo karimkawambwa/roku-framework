@@ -25,8 +25,31 @@
 
 function UIButton(options)
     this = UIView(options, {
+        label : UIlabel({
+            center : true
+            text : options.title
+        })
         
+        focused : {
+            color : ColorWithName(options["focused:title:color"])
+            backgroundColor : ColorWithName(options["focused:bg:color"])
+            backgroundImage : BitmapImageWithName(options["focused:bg:image"])
+        }
+        
+        highlight : {
+            color : ColorWithName(options["highlight:title:color"])
+            backgroundColor : ColorWithName(options["highlight:bg:color"])
+            backgroundImage : BitmapImageWithName(options["highlight:bg:image"])
+        }
+        
+        selected : {
+            color : ColorWithName(options["selected:title:color"])
+            backgroundColor : ColorWithName(options["selected:bg:color"])
+            backgroundImage : BitmapImageWithName(options["selected:bg:image"])
+        }
     })
+    
+    this.children.addChild(this.label)
     
     return this
 end function

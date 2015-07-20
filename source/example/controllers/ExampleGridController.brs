@@ -21,34 +21,47 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function AppDelegate()
-    this = {}
+function ExampleGridController()
+    this = BaseController({
+        id : "ExampleController" 'Custom ID, comment for random Id
+        viewName : "example-grid"
+    })
     
-    this.config = function(app)
-        ' Custom Configuration
-        ' You can set these as you want
-        ' Pont to the correct locations
-        app.frameworkFolder = "pkg://source/framework/"
-        app.viewFolder = "pkg://source/example/view xml/"
+    this.baseInit = this.init
+    this.init = function()
         
-        app.customUI = {}
-        app.customUI["example:view"] = ExampleView
-        
+        m.baseInit()
     end function
     
-    this.applicationLaunched = function()
-        
-        'controller = ExampleController()
-        'navigateTo(controller)
-        
-        
-        controller = ExampleGridController()
-        navigateTo(controller)
+    this.viewLoaded = function()
+        'm.view is not invalid but not visible
+        'm.sideMenu = m.view.children.childWithId("side-menu")
+        'm.exampleListView = m.sideMenu.children.childWithId("example-list")
+        'm.exampleListView.dataSource = m
     end function
     
-    this.applicationTerminated = function()
+    this.viewAppeared = function()
+        'm.view is not invalid and is visible
+    end function
+    
+    ' @required ListView Datasource Call
+    ' ExampleListView Datasource Calls
+    ' These Must be implimented for none static ListView
+    this.numberOfItemsForList = function(listView)
+        return 1
+    end function
+    
+    ' @required ListView Datasource Call
+    ' Return a view
+    this.itemForListAtIndex = function(listView, index)
+        return listView.itemFromPrototypeWithId("prototype-example-item-0")
+    end function
+    
+    this.baseDispose = this.dispose
+    this.dispose = function()
         
-    end function 
+        m.baseDispose()
+    end function
     
     return this
 end function

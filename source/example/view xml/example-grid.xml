@@ -1,0 +1,5 @@
+<view id="main" background-color="slategrey">
+	<label id="movies" text="Movies" color="white" font="Open Sans" size="20" constraints="T|T|50|==|100|main,L|L|50|==|100|main"/>
+	<label id="shows" text="Shows" color="white" font="Open Sans" size="20" constraints="T|T|0|==|100|movies,L|R|50|==|100|movies"/>
+	<label id="favourites" text="Favourites" font="Open Sans" size="20" color="white" constraints="T|T|0|==|100|shows,L|R|50|==|100|shows"/>
+</view>

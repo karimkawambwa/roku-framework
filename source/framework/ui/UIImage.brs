@@ -23,5 +23,11 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function UIImage()
+function UIImage(options)
+    this = UIView(options, {
+        bitmap : invalid
+        
+    })
+    
+    return this
 end function

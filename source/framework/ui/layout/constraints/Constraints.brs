@@ -43,8 +43,11 @@ function CreateConstraintsContainerFor(view, constraintsString)
     constraints.prepareForLayout = function()
         getViewConstrainedToSide = function(constraint, view) as Void
             if constraint = invalid then return
-            
-            constraint.view = view.parent.children.childWithId(constraint.ref())
+            if constraint.ref() = view.parent.id then
+                constraint.view = view.parent
+            else
+                constraint.view = view.parent.children.childWithId(constraint.ref())
+            end if
             if constraint.view = invalid then 
                 print "Constraint Error : Cannot constrain "+side+" [ "+child.id+" ] in [ "+parent.id+" ] to invalid view"
                 print "Constraint Errored : "
