@@ -54,8 +54,8 @@ function UIBorder(x as Integer, y as Integer, width as Integer, height as Intege
     return this
 end function
 
-function AddBorderToBitmap(bitmap as Object, color as integer)
-    border = UIBorder(0, 0, bitmap.getWidth(), bitmap.getHeight(), 4, color)
+function AddBorderToBitmap(bitmap as Object, color as integer, size = 2 as Integer)
+    border = UIBorder(0, 0, bitmap.getWidth(), bitmap.getHeight(), size, color)
     border.draw(bitmap)
     return border 
 end function

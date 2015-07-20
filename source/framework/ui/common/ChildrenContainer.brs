@@ -39,6 +39,8 @@ function AddChildrenContainerTo(this)
                 if child[funcName] <> invalid then child[funcName]()
             else if args.count() = 1
                 if child[funcName] <> invalid then child[funcName](args[0])
+            else if args.count() = 2
+                if child[funcName] <> invalid then child[funcName](args[0], args[1])
             end if
         end for
     end function

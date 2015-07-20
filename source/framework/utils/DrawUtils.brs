@@ -55,7 +55,7 @@ function RefreshScreen()
     ' Draw the app compositor sprites
     ' Holds to level Views
     ' Commented out because other compositor draws aren't working :(
-    'app.compositor.DrawAll()
+    app.compositor.DrawAll()
     
     'AddBorderToBitmap(app.screen, ColorWithName("red"))
     
