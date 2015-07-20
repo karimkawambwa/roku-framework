@@ -50,7 +50,7 @@ function UIView(options, appendOptions = {} as Object)
         m.children.perform("draw", [bitmap])
         
         print m.id+" drawable : ", sprite.GetDrawableFlag() 
-        'AddBorderToBitmap(bitmap, ColorWithName("red"), 1)
+        AddBorderToBitmap(bitmap, ColorWithName("red"), 1)
         
         'Draw the view compositor sprites
         if m.compositor <> invalid then
@@ -77,6 +77,7 @@ function UIView(options, appendOptions = {} as Object)
     
     ' Should be invoked once
     this.init = function()
+        print "Init : "+ m.id
         m.initBackground()
     end function
     

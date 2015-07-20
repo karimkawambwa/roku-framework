@@ -48,7 +48,7 @@ function ExampleController()
     ' ExampleListView Datasource Calls
     ' These Must be implimented for none static ListView
     this.numberOfItemsForList = function(listView)
-        return 3
+        return 1
     end function
     
     ' @required ListView Datasource Call

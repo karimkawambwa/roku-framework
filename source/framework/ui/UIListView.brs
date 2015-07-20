@@ -65,7 +65,19 @@ function UIListView(options)
     end function
     
     this.prepareForLayout = function() as Void
-       m.dataLoaded = m.loadData()
+       if m.isStatic then
+            m.layoutStaticData()
+       else
+            m.dataLoaded = m.loadData()
+       end if
+    end function
+    
+    this.layoutStaticData = function()
+        if m.layout = "horizontal"
+            m.children.perform("setHeight", [m.height()])
+        else
+            m.children.perform("setWidth", [m.width()])
+        end if
     end function
     
     this.loadData = function() as Boolean
@@ -76,6 +88,8 @@ function UIListView(options)
             m.numberOfItems = m.dataSource.numberOfItemsForList(m)
             
             for index = 0 to m.numberOfItems
+                if index = m.numberOfItems then exit for
+                
                 item = m.dataSource.itemForListAtIndex(m, index)
                 
                 if item = invalid then 'Bail, Don't want to deal with this
