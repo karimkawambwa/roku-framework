@@ -40,16 +40,16 @@ function AddVisibilityControlsTo(this)
         return m.visi___pr.hidden
     end function
     
-    this.setOpaque = function(opaque = true as Boolean)
+    this.setOpaque = function(opaque = true as Boolean, refresh = true as Boolean)
         m.visi___pr.opaque = opaque
         
         m.sprites.SetDrawableFlag(opaque)
 
-        m.children.perform("setOpaque", [opaque])
+        m.children.perform("setOpaque", [opaque, false])
         
         'This will mostly be a visual change no need to update the layout
         'Just refresh the screen automatically
-        RefreshScreen()
+        if refresh then RefreshScreen()
     end function
     
     this.setHidden = function(hidden = true as Boolean)
@@ -57,7 +57,7 @@ function AddVisibilityControlsTo(this)
         m.setOpaque(true)
         'Update Layout
         'Hidden will make the view be treated as 0 width and 0 height
-        '
+        'PerformLayout(m)
     end function
     
 end function

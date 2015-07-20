@@ -38,7 +38,7 @@ function DrawAll(array as Object, component as Object, duration = invalid as Dyn
 end function
 
 function RefreshScreen()
-    'print "___________BEGIN__RefreshScreen___________________"
+    print "___________BEGIN__RefreshScreen___________________"
     app = GetApp()
     app.screen.Clear(ColorWithName("black"))
     app.screen.SetAlphaEnable(true)
@@ -54,7 +54,8 @@ function RefreshScreen()
     
     ' Draw the app compositor sprites
     ' Holds to level Views
-    app.compositor.DrawAll()
+    ' Commented out because other compositor draws aren't working :(
+    'app.compositor.DrawAll()
     
     'AddBorderToBitmap(app.screen, ColorWithName("red"))
     
@@ -70,5 +71,5 @@ function RefreshScreen()
     app.roScreen.DrawScaledObject(0, 0, scaleX, scaleY, region)
     app.roScreen.SwapBuffers()
     
-    'print "___________END__RefreshScreen___________________"
+    print "___________END__RefreshScreen___________________"
 end function

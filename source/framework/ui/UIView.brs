@@ -47,10 +47,21 @@ function UIView(options, appendOptions = {} as Object)
         bitmap = sprite.GetRegion().GetBitmap()
         bitmap.Clear(m.backgroundColor)
         
-        m.children.perform("draw", [component])
+        m.children.perform("draw", [bitmap])
+        
+        AddBorderToBitmap(bitmap, ColorWithName("red"))
         
         'Draw the view compositor sprites
-        if m.compositor <> invalid then m.compositor.DrawAll()
+        if m.compositor <> invalid then
+            'Not working :(
+            'WHYYYYYYYYYYYYYYYYYYYYYY!
+            m.compositor.DrawAll()
+        end if
+        
+        if m.isOpaque()
+            print m.x() , m.y()
+            component.DrawObject(m.x(), m.y(), bitmap)
+        end if
         
         return true
     end function
