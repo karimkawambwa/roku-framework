@@ -25,13 +25,11 @@
 
 function UIView(options, appendOptions = {} as Object)
     this = UILayout(options, {
-        ' Each view will have a compositor 
-        ' This will allow anything beyoud the bounds of the view to be clipped
-        viewCompositor : invalid
+        compositor : invalid
         parentCompositor : invalid
         
         backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
-        backgroundColor  : 255 'black
+        backgroundColor  : ColorWithName("white")
     })
     
     AddSpriteContainerTo(this)
@@ -44,14 +42,15 @@ function UIView(options, appendOptions = {} as Object)
     ' Called by RefreshScreen
     ' Carefull Overriding this method
     this.draw = function(component as Object) as Boolean
-        'm.children.perform("draw", [component])
-        print "Drawing : " + m.id
+        
         sprite = m.sprites.sprite(0)
         bitmap = sprite.GetRegion().GetBitmap()
         bitmap.Clear(m.backgroundColor)
         
+        m.children.perform("draw", [component])
+        
         'Draw the view compositor sprites
-        if m.viewCompositor <> invalid m.viewCompositor.DrawAll()
+        if m.compositor <> invalid then m.compositor.DrawAll()
         
         return true
     end function
@@ -78,17 +77,15 @@ function UIView(options, appendOptions = {} as Object)
     
     ' Should be invoked once
     this.initViewCompositor = function() as Void
-        if m.viewCompositor <> invalid then return
+        if m.compositor <> invalid then return
         
-        print "Created Compositor for : "+m.id
-        
-        m.viewCompositor = CreateObject("roCompositor")
+        m.compositor = CreateObject("roCompositor")
         
         sprite = m.sprites.sprite(0)
         bitmap = sprite.GetRegion().GetBitmap()
         bitmap.SetAlphaEnable(true)
-    
-        m.viewCompositor.SetDrawTo(bitmap, 0)
+        
+        m.compositor.SetDrawTo(bitmap, 0)
     end function
     
     ' Should be invoked once

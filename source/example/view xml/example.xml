@@ -1,4 +1,4 @@
-<example:view id="main-layout" background-color="white">
+<example:view id="main-layout" background-color="black">
 
 	<view id="side-menu" background-color="black" width="25%" height="100%">
 		<label id="hurray-label" text="Menu" color="darkorange" font="Open Sans" size="30" />

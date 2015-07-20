@@ -40,7 +40,7 @@ end function
 function RefreshScreen()
     'print "___________BEGIN__RefreshScreen___________________"
     app = GetApp()
-    app.screen.Clear(ColorWithName("white"))
+    app.screen.Clear(ColorWithName("black"))
     app.screen.SetAlphaEnable(true)
     
     currCtrlr = AppNavigation().currentController()
