@@ -25,6 +25,8 @@ PKGREL = ./build/packages
 ZIPREL = ./build/zips
 SOURCEREL = ../
 
+ROKU_DEV_TARGET = 192.168.129.242
+
 ZIP_EXCLUDE= -x .project -x .buildpath -x \*.md -x \*.mk -x Makefile
 
 ROKU_DEV_USERNAME ?= rokudev

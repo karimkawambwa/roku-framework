@@ -18,24 +18,24 @@
 APPNAME = roku-framework
 APPDEPS = manifest count_functions
 ZIP_EXCLUDE = -x .git\* -x manifest.template -x \*.swp -x \*.DS_Store -x \*.py -x roku_screenshot.jpg
-include ../app.mk
+include ./app.mk
 
-APPTITLE = PlexDev
+APPTITLE = RokuFramework
 
 num_functions := $(shell grep -ri --include=*.brs 'end \(function\|sub\)' . | wc -l | tr -d ' ')
 
 .PHONY: manifest count_functions beta dev rel test
 
-beta: APPTITLE = PlexBeta
+beta: APPTITLE = RokuFrameworkBeta
 beta: $(APPNAME)
 
-test: APPTITLE = PlexTest
+test: APPTITLE = RokuFrameworkTest
 test: $(APPNAME)
 
-dev: APPTITLE = PlexDev
+dev: APPTITLE = RokuFrameworkDev
 dev: $(APPNAME)
 
-rel: APPTITLE = Plex
+rel: APPTITLE = RokuFramework
 rel: $(APPNAME)
 
 manifest:
