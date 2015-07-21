@@ -31,44 +31,26 @@
 ' HD, SD and Wide Screens assets will be respected if specific
 function initImages(app)
     app.imagePaths = {
-    	de_de : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
-    	en_gb : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
-    	en_us : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
-    	es_es : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
-    	fr_ca : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
-    	default : {
-    		hd : {}
-    		sd : {}
-    		wide : {}
-    		default : {}
-    	}
     }
+    
+    getImagesInPath = function(path,imagePaths, getImagesInPath)
+        images = app.fileSystem.Find(path, "(.jpg|.png)")
+        images.ResetIndex()
+        image = images.GetIndex()
+        while path <> invalid
+            
+            image = images.GetIndex()
+        end while
+        
+        paths = app.fileSystem.GetDirectoryListing(path)
+        paths.ResetIndex()
+        path = paths.GetIndex()
+        while path <> invalid
+            getImagesInPath(path, imagePaths, getImagesInPath)
+            path = paths.GetIndex()
+        end while
+    end function
+    
+    'getImagesInPath("pkg://locale/images",app.imagePaths, getImagesInPath)
 
-    paths = app.fileSystem.GetDirectoryListing("pkg://locale/images")
-    ' TODO : 
 end function

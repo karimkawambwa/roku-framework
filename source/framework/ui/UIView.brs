@@ -30,6 +30,9 @@ function UIView(options, appendOptions = {} as Object)
         
         backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
         backgroundColor  : ColorWithName("white")
+        isFocusable : function()
+            return true
+        end function
     })
     
     AddSpriteContainerTo(this)

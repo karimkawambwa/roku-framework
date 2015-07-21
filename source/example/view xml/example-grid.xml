@@ -1,5 +1,15 @@
 <view id="main" background-color="slategrey">
-	<button id="movies" text="Movies" color="white" font="Open Sans" size="20" constraints="T|T|50|==|100|main,L|L|50|==|100|main"/>
-	<button id="shows" text="Shows" color="white" font="Open Sans" size="20" constraints="T|T|0|==|100|movies,L|R|50|==|100|movies"/>
-	<button id="favourites" text="Favourites" font="Open Sans" size="20" color="white" constraints="T|T|0|==|100|shows,L|R|50|==|100|shows"/>
+	<button id="movies" title="Movies" textColor="white" font="Open Sans" size="20" constraints="T|T|50|==|100|main,L|L|50|==|100|main"/>
+	<button id="shows" title="Shows" textColor="black" font="Open Sans" size="20" constraints="T|T|0|==|100|movies,L|R|50|==|100|movies"/>
+	<button id="favourites" title="Favourites" font="Open Sans" size="20" textColor="black" constraints="T|T|0|==|100|shows,L|R|50|==|100|shows"/>
+	<view id="test" width="95%" height="100%" constraints="T|B|10|==|100|movies" background-opacity="0" align_v="">
+		<view id="1" width="100" height="140" background-color="black">
+		</view>	
+		<view x="110" id="2" width="100" height="140" background-color="black">
+		</view>	
+		<view x="220" id="3" width="100" height="140" background-color="black">
+		</view>	
+		<view x="220" id="3" width="100" height="140" background-color="black">
+		</view>
+	</view>
 </view>

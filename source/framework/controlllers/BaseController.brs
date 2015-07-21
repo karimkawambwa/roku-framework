@@ -48,6 +48,7 @@ function BaseController(appendParams as Object)
         m.viewLoaded()
         
         onLayoutComplete = function(context)
+            SetupFocusControl(context.view)
             context.viewAppeared()
         end function
         

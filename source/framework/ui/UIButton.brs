@@ -24,10 +24,20 @@
 ' THE SOFTWARE.
 
 function UIButton(options)
+    
+    options["background-opacity"] = "0"
+    
     this = UIView(options, {
+        isSelectable : true
+        padding      : if_else(options.padding <> invalid, options.padding, 5)
+        
         label : UIlabel({
+            id : "title_label"
+            font : if_else(options.font <> invalid, options.font, "Open Sans")
+            size : if_else(options.size <> invalid, options.size, "10")
             center : true
-            text : options.title
+            text   : options.title
+            color  : options.textColor
         })
         
         focused : {
@@ -49,7 +59,17 @@ function UIButton(options)
         }
     })
     
-    this.children.addChild(this.label)
+    this.label.sizeToFit()
+    
+    this.setWidth(if_else(options.width <> invalid, options.width, this.label.width() + (2*this.padding)))
+    this.setHeight(if_else(options.height <> invalid, options.height, this.label.height() + (2*this.padding)))
+    
+    this.base_view_movedToParent = this.movedToParent
+    this.movedToParent = function(parent)
+        m.base_view_movedToParent(parent)
+    
+        m.children.addChild(m.label)
+    end function
     
     return this
 end function

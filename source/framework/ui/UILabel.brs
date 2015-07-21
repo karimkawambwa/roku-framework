@@ -38,10 +38,12 @@ function UILabel(options)
         fontname : options.font
     })
     
+    this.font = FontWithNameAndSize(this.fontname, this.size)
+    
     ' @Override UIVIew init
     this.base_view_Init = this.init
     this.init = function()
-        m.font = FontWithNameAndSize(m.fontname, m.size)
+        if m.font = invalid then print "Font Failed to Load : ", m.id
         
         m.sizeToFit()
         
