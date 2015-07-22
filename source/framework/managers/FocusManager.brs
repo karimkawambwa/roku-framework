@@ -8,24 +8,43 @@ function SetupFocusControl(view)
     
     this.init = function()
         m.createFocusMap()
-        if m.focusableViewCount > 0 then view.focusControl = m
+        if m.focusableViewCount > 0 then 
+            m.view.focusControl = m
+        end if
+    end function
+    
+    this.focusOn = function(viewId) as Boolean
+        if viewId = invalid or m.map[viewId] = invalid then return false
+        
+        curr = invalid
+        if m.focused <> invalid then
+            curr = m.map[m.focused].view
+        end if
+        
+        nxt = m.map[viewId].view
+        nxt.focus(curr = invalid)
+        m.focused = nxt.id
+        
+        if curr <> invalid then curr.blur()
+        
+        return true
     end function
     
     this.createFocusMap = function()
-        m.view.children["each"](m, function(index, currView, m) as Void
+        m.view.children["each"](m, function(index, currView, m) as Boolean
             
-            if not currView.isFocusable() then return
+            if not currView.isFocusable() then return true 'continue
             
-            map = { T: invalid, B : invalid, L: invalid, R: invalid, tPos: invalid, bPos: invalid, lPos: invalid, rPos: invalid }
+            map = { T: invalid, B : invalid, L: invalid, R: invalid, tPos: invalid, bPos: invalid, lPos: invalid, rPos: invalid, view : currView }
             
-            currView.parent.children["each"]([m, currView, map], function(index, nextView, args) as Void
+            currView.parent.children["each"]([m, currView, map], function(index, nextView, args) as Boolean
                 m = args[0]
                 currView = args[1]
                 map = args[2]
                 
-                if currView.id = nextView.id then return
+                if currView.id = nextView.id then return true 'continue
                 
-                if not nextView.isFocusable() then return
+                if not nextView.isFocusable() then return true 'continue
                
                 if nextView.isOpaque()
                     ' bottom selection
@@ -59,15 +78,18 @@ function SetupFocusControl(view)
                             map.L = nextView.id
                         end if
                     end if
-                end if                          
+                end if
+                
+                return true
             end function)
             
             m.focusableViewCount = m.focusableViewCount+ 1
             
             m.map[currView.id] = map
             
-            if currView.children.Count() > 0 then SetupFocusControl(currView)
+            if currView.type = "UIView" and currView.children.Count() > 0 then SetupFocusControl(currView)
             
+            return true
         end function)
     end function
 
@@ -101,7 +123,7 @@ function SetupFocusControl(view)
         else if side = "top" then
             compX1 = curr.center().y
             compY1 = curr.y()
-            compX2 = nextCenterX
+            compX2 = nxt.center().x
             compY2 = nxt.y() + nxt.height()
             if compY2 <= compY1 then
                 if curr.center().y >= nxt.x() and curr.center().y <= nxt.x() + nxt.width() then
@@ -112,8 +134,8 @@ function SetupFocusControl(view)
             end if
         else if side = "bottom" then
             compX1 = curr.center().y
-            compY1 = curr.y() + curCtrl.height
-            compX2 = nextCenterX
+            compY1 = curr.y() + curr.height()
+            compX2 = nxt.center().x
             compY2 = nxt.y()
             if compY2 >= compY1 then
                 if curr.center().y >= nxt.x() and curr.center().y <= nxt.x() + nxt.width() then
@@ -127,32 +149,42 @@ function SetupFocusControl(view)
         return score                
     end function
 
-    this.userInput = function(msg, codes)
+    this.handleUserInput = function(msg) as Boolean
+        print "handleUserInput : ", msg
         if msg = 2
-            m.buttonUp()
+            return m.buttonUp()
         else if msg = 3
-            m.buttonDown()
+            return m.buttonDown()
         else if msg = 4
-            m.buttonLeft()
+            return m.buttonLeft()
         else if msg = 5
-            m.buttonRight()
+            return m.buttonRight()
         end if
+        return false
     end function
     
-    this.buttonUp = function()
-        
+    this.buttonUp = function() as Boolean
+        map = m.map[m.focused]
+        m.focusOn(map.U)
+        return true
     end function
     
-    this.buttonDown = function()
-        
+    this.buttonDown = function() as Boolean
+        map = m.map[m.focused]
+        m.focusOn(map.D)
+        return true
     end function
     
-    this.buttonLeft = function()
-        
+    this.buttonLeft = function() as Boolean
+        map = m.map[m.focused]
+        m.focusOn(map.L)
+        return true
     end function
     
-    this.buttonRight = function()
-        
+    this.buttonRight = function() as Boolean
+        map = m.map[m.focused]
+        m.focusOn(map.R)
+        return true
     end function
     
     this.init()

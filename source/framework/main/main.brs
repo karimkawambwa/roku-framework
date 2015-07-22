@@ -34,19 +34,17 @@ function main()
     
     while 1
         msg = app.msgPort.GetMessage()
-        
+        handled = false
         'app.events.dispatch(msg)
         
         currentController = mainNav.currentController()
         currentView = currentController.view
         
         if type(msg) = "roUniversalControlEvent"
-            if currentView <> invalid and currentView.handleUserInput <> invalid
-                currentView.handleUserInput(msg.GetInt(), codes)
-            end if
+            if currentView.focusControl <> invalid then handled = currentView.focusControl.handleUserInput(msg.GetInt())
             
-            if currentView <> invalid and currentView.handleUserInput <> invalid
-                currentView.handleUserInput(msg.GetInt(), codes)
+            if not handled and currentView <> invalid and currentView.handleUserInput <> invalid
+                handled = currentView.handleUserInput(msg.GetInt(), codes)
             end if
         end if
 

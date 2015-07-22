@@ -25,8 +25,8 @@
 
 function UILabel(options)
     
-    if options["background-opacity"] = invalid then options["background-opacity"] = "0"
-    if options["background-color"] = invalid then options["background-color"] = "white"
+    if options["bg:opacity"] = invalid then options["bg:opacity"] = "0"
+    if options["bg:color"] = invalid then options["bg:color"] = "white"
     
     this = UIView(options, {
         type  : "UILabel"
@@ -48,7 +48,7 @@ function UILabel(options)
         m.sizeToFit()
         
         'FIX : ROKU BUG FOR TEXT DRAWING ON BITMAP
-        m.backgroundColor = ColorWithName(m.colorname, ColorOpacity()["0"])
+        m.backgroundColor = ColorWithName(m.colorname, ColorOpacity(0))
         
         m.base_view_Init()
         

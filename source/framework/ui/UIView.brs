@@ -25,11 +25,13 @@
 
 function UIView(options, appendOptions = {} as Object)
     this = UILayout(options, {
+        type : "UIView"
         compositor : invalid
         parentCompositor : invalid
         
-        backgroundOpacity : if_else(options["background-opacity"] <> invalid, options["background-opacity"], "100")
-        backgroundColor  : ColorWithName("white")
+        backgroundOpacity : if_else(options["bg:opacity"] <> invalid, options["bg:opacity"], 1)
+        backgroundColor   : invalid
+        
         isFocusable : function()
             return true
         end function
@@ -40,7 +42,7 @@ function UIView(options, appendOptions = {} as Object)
     'Other Views options subclassing
     if appendOptions <> invalid then this.Append(appendOptions) 
 
-    this.backgroundColor = ColorWithName(options["background-color"], ColorOpacity()[this.backgroundOpacity])
+    this.backgroundColor = ColorWithName(options["bg:color"], ColorOpacity(this.backgroundOpacity))
     
     ' Called by RefreshScreen
     ' Carefull Overriding this method
@@ -48,7 +50,7 @@ function UIView(options, appendOptions = {} as Object)
         
         sprite = m.sprites.sprite(0)
         bitmap = sprite.GetRegion().GetBitmap()
-        bitmap.Clear(m.backgroundColor)
+        bitmap.Clear(m.bgColor())
         
         m.children.perform("draw", [bitmap])
         
@@ -75,12 +77,16 @@ function UIView(options, appendOptions = {} as Object)
     
     this.setBackgroundColor = function(color as Integer)
         m.backgroundColor = color
-        if m.bitmap = invalid then m.initBackground()
+        
+        RefreshScreen()
+    end function
+    
+    this.bgColor = function()
+        return m.backgroundColor
     end function
     
     ' Should be invoked once
     this.init = function()
-        print "Init : "+ m.id
         m.initBackground()
     end function
     
@@ -102,7 +108,7 @@ function UIView(options, appendOptions = {} as Object)
         if m.sprites.count() > 0 then return
         
         bitmap = CreateBitmap(m.width(), m.height())
-        bitmap.Clear(m.backgroundColor)
+        bitmap.Clear(m.bgColor())
         
         region = CreateRegion(0, 0, m.width(), m.height(), bitmap)
         
@@ -115,6 +121,14 @@ function UIView(options, appendOptions = {} as Object)
         ' Everything belonging to this view will be draw on this
         m.sprites.Add(sprite)
         m.sprites.SetDrawableFlag(m.isOpaque())
+    end function
+    
+    this.focus = function(refresh = true)
+        if refresh then RefreshScreen()
+    end function
+    
+    this.blur = function(refresh = true)
+        if refresh then RefreshScreen()
     end function
     
     return this

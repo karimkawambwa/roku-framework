@@ -37,28 +37,38 @@ function DrawAll(array as Object, component as Object, duration = invalid as Dyn
     return success
 end function
 
-function RefreshScreen()
-    print "___________BEGIN__RefreshScreen___________________"
-    app = GetApp()
+function BeginScreenUpdate(app)
     app.screen.Clear(ColorWithName("black"))
     app.screen.SetAlphaEnable(true)
+end function
+
+function RefreshScreen()
+    print "___________BEGIN__RefreshScreen___________________"
     
-    currCtrlr = AppNavigation().currentController()
-    currView = currCtrlr.view
+    app = GetApp()
     
-    if currView <> invalid then
-        currView.draw(app.screen)
+    BeginScreenUpdate(app)
+    
+    currentController = AppNavigation().currentController()
+    
+    if currentController.View <> invalid then
+        currentController.View.Draw(app.screen)
     else
         print "Invalid View Error Controller [ ",currCtrlr," ]"
     end if
     
     ' Draw the app compositor sprites
     ' Holds to level Views
-    ' Commented out because other compositor draws aren't working :(
     app.compositor.DrawAll()
     
     'AddBorderToBitmap(app.screen, ColorWithName("red"))
     
+    UpdateRoScreen(app)
+    
+    print "___________END__RefreshScreen___________________"
+end function
+
+function UpdateRoScreen(app)
     scaleX = app.roScreen.GetWidth() / app.screen.GetWidth()
     scaleY = app.roScreen.GetHeight() / app.screen.GetHeight()
     
@@ -70,6 +80,4 @@ function RefreshScreen()
     region.SetScaleMode(1)
     app.roScreen.DrawScaledObject(0, 0, scaleX, scaleY, region)
     app.roScreen.SwapBuffers()
-    
-    print "___________END__RefreshScreen___________________"
 end function

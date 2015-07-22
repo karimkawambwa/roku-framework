@@ -49,12 +49,11 @@ function AddChildrenContainerTo(this)
         return m.x___.childrenIds.Count()
     end function
     
-    this.children["each"] = function(ctxt, callback)
-        index = 0
-        for each id in m.x___.childrenIds
-            child = m.x___.children[id]
-            callback(index, child, ctxt)
-            index = index + 1
+    this.children["each"] = function(arg, callback)
+        for idx = 0 to m.x___.childrenIds.Count()
+            if idx = m.x___.childrenIds.Count() then exit for
+            continue = callback(idx, m.x___.children[m.x___.childrenIds[idx]], arg)
+            if continue <> invalid and not continue then exit for
         end for
     end function
     

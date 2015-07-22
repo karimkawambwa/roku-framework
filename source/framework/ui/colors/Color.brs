@@ -36,29 +36,33 @@ function ColorWithName(name, opacity = "FF" as String) as Integer
 end function
 
 ' Opacity percentages and the hex value
-function ColorOpacity()
+function ColorOpacity(opacity)
 	colorop = {}
-	colorop["100"] = "FF"
-	colorop["95"] = "F2"
-	colorop["90"] =  "E6"
-	colorop["85"] = "D9"
-	colorop["80"] = "CC"
-	colorop["75"] = "BF"
-	colorop["70"] = "B3"
-	colorop["65"] = "A6"
-	colorop["60"] = "99"
-	colorop["55"] = "8C"
-	colorop["50"] = "80"
-	colorop["45"] = "73"
-	colorop["40"] = "66"
-	colorop["35"] = "59"
-	colorop["30"] = "4D"
-	colorop["25"] = "40"
-	colorop["20"] = "33"
-	colorop["15"] = "26"
-	colorop["10"] = "1A"
-	colorop["5"] = "0D"
+	colorop["1"] = "FF"
+	colorop["0.95"] = "F2"
+	colorop["0.9"] =  "E6"
+	colorop["0.85"] = "D9"
+	colorop["0.8"] = "CC"
+	colorop["0.75"] = "BF"
+	colorop["0.7"] = "B3"
+	colorop["0.65"] = "A6"
+	colorop["0.6"] = "99"
+	colorop["0.55"] = "8C"
+	colorop["0.5"] = "80"
+	colorop["0.45"] = "73"
+	colorop["0.4"] = "66"
+	colorop["0.35"] = "59"
+	colorop["0.3"] = "4D"
+	colorop["0.25"] = "40"
+	colorop["0.2"] = "33"
+	colorop["0.15"] = "26"
+	colorop["0.1"] = "1A"
+	colorop["0.5"] = "0D"
 	colorop["0"] = "00"
 	
-	return colorop
+	if type(opacity) <> "roString" then opacity = opacity.toStr()
+	
+	op = colorop[opacity]
+	
+	return op
 end function

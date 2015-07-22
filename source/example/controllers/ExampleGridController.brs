@@ -42,6 +42,7 @@ function ExampleGridController()
     
     this.viewAppeared = function()
         'm.view is not invalid and is visible
+        m.view.focusControl.focusOn("movies")
     end function
     
     ' @required ListView Datasource Call
