@@ -204,11 +204,11 @@ function outInCirc(t, b, c, d)
 end function
 
 function inElastic(t, b, c, d, a, p)
-  if t = 0 then return b end
+  if t = 0 then return b
 
   t = t / d
 
-  if t = 1  then return b + c end
+  if t = 1  then return b + c
 
   if not p then p = d * 0.3
 
@@ -235,8 +235,6 @@ function outElastic(t, b, c, d, a, p)
 
   if not p then p = d * 0.3
 
-  s
-
   if not a or a < abs(c) then
     a = c
     s = p / 4
@@ -258,8 +256,6 @@ function inOutElastic(t, b, c, d, a, p)
 
   if not p then p = d * (0.3 * 1.5)
   if not a then a = 0
-
-  s
 
   if not a or a < abs(c) then
     a = c
@@ -288,19 +284,19 @@ function outInElastic(t, b, c, d, a, p)
 end function
 
 function inBack(t, b, c, d, s)
-  if s = invalid then s = 1.70158 end
+  if s = invalid then s = 1.70158
   t = t / d
   return c * t * t * ((s + 1) * t - s) + b
 end function
 
 function outBack(t, b, c, d, s)
-  if s = invalid then s = 1.70158 end
+  if s = invalid then s = 1.70158
   t = t / d - 1
   return c * (t * t * ((s + 1) * t + s) + 1) + b
 end function
 
 function inOutBack(t, b, c, d, s)
-  if s = invalid then s = 1.70158 end
+  if s = invalid then s = 1.70158
   s = s * 1.525
   t = t / d * 2
   if t < 1 then
@@ -353,4 +349,8 @@ function outInBounce(t, b, c, d)
   else
     return inBounce((t * 2) - d, b + c / 2, c / 2, d)
   end if
+end function
+
+function pow(a, b)
+    return a ^ b
 end function

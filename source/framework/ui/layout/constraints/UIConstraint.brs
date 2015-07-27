@@ -52,19 +52,19 @@ function UIContraint(ref, side, value, priority, flexibility = "==" as String)
         return m.x___pr.flexibility
     end function
     
-    this.setValue = function(value, refresh = true as Boolean, easing = invalid as Function)
+    this.setValue = function(value, refresh = true as Boolean, easing = linear as Function)
         m.x___pr.value = value
         'TODO: Easing
         if refresh then RefreshScreen()
     end function
     
-    this.setPriority = function(value, refresh = true as Boolean, easing = invalid as Function)
+    this.setPriority = function(value, refresh = true as Boolean, easing = linear as Function)
         m.x___pr.value = value
         'TODO: Easing
         if refresh then RefreshScreen()
     end function
     
-    this.setFlexibility = function(value, refresh = true as Boolean, easing = invalid as Function)
+    this.setFlexibility = function(value, refresh = true as Boolean, easing = linear as Function)
         m.x___pr.value = value
         'TODO: Easing
         if refresh then RefreshScreen()

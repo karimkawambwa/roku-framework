@@ -39,6 +39,7 @@ function UIView(options, appendOptions = {} as Object)
     })
     
     AddSpriteContainerTo(this)
+    IncludeAnimateTo(this)
     
     'Other Views options subclassing
     if appendOptions <> invalid then this.Append(appendOptions) 

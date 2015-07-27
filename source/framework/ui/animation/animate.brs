@@ -1,4 +1,4 @@
-function IncludeAnimation(this)
+function IncludeAnimateTo(this)
     ' @param options : opacity, width, height, x, y
     this.animate = function(options as Object, easing as Function, duration as Integer, delay = 0 as Integer, complete = invalid as Function) as Object
         if options = invalid then
@@ -69,13 +69,20 @@ function IncludeAnimation(this)
                 if change.h <> invalid then m.setHeight(easing(now,begin.h,change.h,duration))
                 'if options.o <> invalid then m.setOpacity()
                 
-                m.updateContraints()
+                m.updateConstraints()
                 
                 ' Layout the Views
-                ' PerformLayout Is Recursive Throught All Children
-                PerformLayout({ context : m, index : 0, workStack : []})
+                layoutDone = false
+                layoutArgs = { context : m.parent, index : 0, workStack : []}
+                while not layoutDone
+                    layoutDone = PerformLayout(layoutArgs)
+                end while
                 ' RefreshScreen
                 RefreshScreen()
+                
+                print now
+                
+                return now >= duration
             end function
             onStateChangeArg : [ 
                 m, 

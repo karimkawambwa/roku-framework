@@ -117,33 +117,33 @@ function UILayout(options, appendOptions = {} as Object)
         
         if top <> invalid
             if top.side() = "T"
-                top.setValue(view.y() - top.view.y())
+                top.setValue(view.y() - top.view.y(), false)
             else if top.side() = "B"
-                top.setValue(view.y() - top.view.y() - top.view.height())
+                top.setValue(view.y() - top.view.y() - top.view.height(), false)
             end if
         end if
     
         if bottom <> invalid
             if bottom.side() = "T"
-                bottom.setValue(view.y() - bottom.view.y()- view.height())
+                bottom.setValue(view.y() - bottom.view.y()- view.height(), false)
             else if bottom.side() = "B"
-                bottom.setValue(-view.y() + bottom.view.y() - view.height() + bottom.view.height())
+                bottom.setValue(-view.y() + bottom.view.y() - view.height() + bottom.view.height(), false)
             end if
         end if
         
         if left <> invalid
             if left.side() = "L"
-                left.setValue(view.x() - left.view.x())
+                left.setValue(view.x() - left.view.x(), false)
             else if left.side() = "R"
-                left.setValue(view.x() - left.view.x() - left.view.width())
+                left.setValue(view.x() - left.view.x() - left.view.width(), false)
             end if
         end if
         
         if right <> invalid
             if right.side() = "L"
-                right.setValue(view.x() - right.view.x() - right.view.width())
+                right.setValue(view.x() - right.view.x() - right.view.width(), false)
             else if right.side() = "R"
-                right.setValue(-view.x() + right.view.x() + right.view.width() - view.width())
+                right.setValue(-view.x() + right.view.x() + right.view.width() - view.width(), false)
             end if
         end if
     end function
