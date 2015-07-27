@@ -26,6 +26,7 @@
 function UIView(options, appendOptions = {} as Object)
     this = UILayout(options, {
         type : "UIView"
+        animating : false
         compositor : invalid
         parentCompositor : invalid
         

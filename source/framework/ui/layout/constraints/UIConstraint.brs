@@ -23,16 +23,9 @@
 
 function UIContraint(ref, side, value, priority, flexibility = "==" as String)
     this = {  
-        constraint___pr : { 'don't access directly
+        x___pr : { 'don't access directly
             ref      : ref
             side     : side
-            value    : value
-            priority : priority
-            flexibility : flexibility
-        }
-        
-        pre_layout : {
-            ref      : ref
             value    : value
             priority : priority
             flexibility : flexibility
@@ -40,38 +33,41 @@ function UIContraint(ref, side, value, priority, flexibility = "==" as String)
     }
     
     this.ref = function()
-        return m.constraint___pr.ref
+        return m.x___pr.ref
     end function
     
     this.side = function()
-        return m.constraint___pr.side
+        return m.x___pr.side
     end function
     
     this.value = function()
-        return m.constraint___pr.value
+        return m.x___pr.value
     end function
     
     this.priority = function()
-        return m.constraint___pr.priority
+        return m.x___pr.priority
     end function
     
     this.flexibility = function()
-        return m.constraint___pr.flexibility
+        return m.x___pr.flexibility
     end function
     
-    this.setValue = function(value)
-        m.pre_layout.value = value
-        'Update Layout
+    this.setValue = function(value, refresh = true as Boolean, easing = invalid as Function)
+        m.x___pr.value = value
+        'TODO: Easing
+        if refresh then RefreshScreen()
     end function
     
-    this.setPriority = function(value)
-        m.pre_layout.value = value
-        'Update Layout
+    this.setPriority = function(value, refresh = true as Boolean, easing = invalid as Function)
+        m.x___pr.value = value
+        'TODO: Easing
+        if refresh then RefreshScreen()
     end function
     
-    this.setFlexibility = function(value)
-        m.pre_layout.value = value
-        'Update Layout After this call or it will update on another update cycle
+    this.setFlexibility = function(value, refresh = true as Boolean, easing = invalid as Function)
+        m.x___pr.value = value
+        'TODO: Easing
+        if refresh then RefreshScreen()
     end function
     
     return this

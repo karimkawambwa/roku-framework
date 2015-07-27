@@ -54,7 +54,7 @@ function CreateConstraintsContainerFor(view, constraintsString)
                 print constraint
             end if
         end function
-            
+        
         getViewConstrainedToSide(m.T, m.view)
         getViewConstrainedToSide(m.B, m.view)
         getViewConstrainedToSide(m.L, m.view)

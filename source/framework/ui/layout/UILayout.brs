@@ -108,5 +108,85 @@ function UILayout(options, appendOptions = {} as Object)
         '
     end function
     
+    this.updateConstraints = function()
+        view = m
+        top    = view.constraints.T 'top contraint
+        bottom = view.constraints.B 'bottom contraint
+        left   = view.constraints.L 'left contraint
+        right  = view.constraints.R 'right contraint
+        
+        if top <> invalid
+            if top.side() = "T"
+                top.setValue(view.y() - top.view.y())
+            else if top.side() = "B"
+                top.setValue(view.y() - top.view.y() - top.view.height())
+            end if
+        end if
+    
+        if bottom <> invalid
+            if bottom.side() = "T"
+                bottom.setValue(view.y() - bottom.view.y()- view.height())
+            else if bottom.side() = "B"
+                bottom.setValue(-view.y() + bottom.view.y() - view.height() + bottom.view.height())
+            end if
+        end if
+        
+        if left <> invalid
+            if left.side() = "L"
+                left.setValue(view.x() - left.view.x())
+            else if left.side() = "R"
+                left.setValue(view.x() - left.view.x() - left.view.width())
+            end if
+        end if
+        
+        if right <> invalid
+            if right.side() = "L"
+                right.setValue(view.x() - right.view.x() - right.view.width())
+            else if right.side() = "R"
+                right.setValue(-view.x() + right.view.x() + right.view.width() - view.width())
+            end if
+        end if
+    end function
+    
+    this.updateDimmensions = function()
+        view = m
+        top    = view.constraints.T 'top contraint
+        bottom = view.constraints.B 'bottom contraint
+        left   = view.constraints.L 'left contraint
+        right  = view.constraints.R 'right contraint
+        
+        if top <> invalid
+            if top.side() = "T"
+                view.setY(top.view.y() + top.value())
+            else if top.side() = "B"
+                view.setY(top.view.y() + top.view.height() + top.value())
+            end if
+        end if
+
+        if bottom <> invalid
+            if bottom.side() = "T"
+                view.setY(bottom.view.y() + bottom.value() + view.height())
+            else if bottom.side() = "B"
+                view.setY(bottom.view.y() + bottom.view.height() - bottom.value() - view.height())
+            end if
+        end if
+        
+        if left <> invalid
+            if left.side() = "L"
+                view.setX(left.view.x() + left.value())
+            else if left.side() = "R"
+                view.setX(left.view.x() + left.view.width() + left.value())
+            end if
+        end if
+        
+        if right <> invalid
+            if right.side() = "L"
+                view.setX(right.view.x() + right.view.width() + right.value())
+            else if right.side() = "R"
+                view.setX(right.view.x() + right.view.width() - view.width() - right.value())
+            end if
+        end if
+    end function
+    
     return this
 end function
