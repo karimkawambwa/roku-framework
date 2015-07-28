@@ -34,6 +34,7 @@ function initApp()
         fileSystem      : CreateObject("roFileSystem")
         
         urlEventListeners : []
+        textureEventListeners : []
         
         'Action Safe Zone From Roku Docs
         'Will be set in initScreen

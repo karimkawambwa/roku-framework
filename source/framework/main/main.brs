@@ -64,6 +64,22 @@ function main()
             end for
         end if
         
+        if type(msg) = "roTextureRequestEvent"
+            idx = 0
+            for each listener in app.textureEventListeners
+                if listener.id = msg.GetSourceIdentity()
+                    done = listener.handleUrlEvent(msg)
+                    if done then
+                        app.textureEventListeners.Delete(idx)
+                    end if
+                    
+                    exit for
+                end if
+                
+                idx = idx + 1
+            end for
+        end if
+        
         app.async.performTasks() 'perfortasks to simulate asynchronous behaviour
     end while
     
