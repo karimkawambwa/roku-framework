@@ -33,6 +33,8 @@ function initApp()
         deviceInfo      : CreateObject("roDeviceInfo")
         fileSystem      : CreateObject("roFileSystem")
         
+        urlEventListeners : []
+        
         'Action Safe Zone From Roku Docs
         'Will be set in initScreen
         screenSafeZone  : {

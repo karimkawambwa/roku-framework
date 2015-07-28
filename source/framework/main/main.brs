@@ -49,7 +49,19 @@ function main()
         end if
 
         if type(msg) = "roUrlEvent"
-
+            idx = 0
+            for each listener in app.urlEventListeners
+                if listener.id = msg.GetSourceIdentity()
+                    done = listener.handleUrlEvent(msg)
+                    if done then
+                        app.urlEventListeners.Delete(idx)
+                    end if
+                    
+                    exit for
+                end if
+                
+                idx = idx + 1
+            end for
         end if
         
         app.async.performTasks() 'perfortasks to simulate asynchronous behaviour

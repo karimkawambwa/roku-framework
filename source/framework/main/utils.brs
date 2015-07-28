@@ -52,6 +52,10 @@ function ScheduleTask(task)
     return GetApp().async.scheduleTask(task)
 end function
 
+function KillTask(taskId)
+    return GetApp().async.cancelTask(taskId)
+end function
+
 function ParseXML(str As String) As Dynamic
     if str = invalid return invalid
     xml = CreateObject("roXMLElement")

@@ -38,6 +38,15 @@ function ExampleGridController()
         'm.sideMenu = m.view.children.childWithId("side-menu")
         'm.exampleListView = m.sideMenu.children.childWithId("example-list")
         'm.exampleListView.dataSource = m
+        
+        ahttp("GET",{
+            url : "http://google.com"
+            done : function(response as Object)
+                headers = response.headers
+                body = response.body
+                
+            end function
+        }).fire()
     end function
     
     this.viewAppeared = function()
