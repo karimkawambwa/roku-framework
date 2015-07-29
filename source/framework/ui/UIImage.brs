@@ -25,9 +25,30 @@
 
 function UIImage(options)
     this = UIView(options, {
+        name : options["image:name"]
+        src : options["image:src"]
+        async : options["load:sync"] = invalid
         bitmap : invalid
-        
     })
+    
+    this.setup = function()
+        options = {
+            args : [m]
+            complete : m.imageLoaded
+        }
+        if m.name <> invalid
+            ImageNamed(m.name, options)
+        else if m.src <> invalid
+            ImageFromPath(m.name, options)
+        end if
+    end function
+    
+    this.imageLoaded = function(id, bitmap, args)
+        m = args[0]
+        stop 
+    end function
+    
+    this.setup()
     
     return this
 end function

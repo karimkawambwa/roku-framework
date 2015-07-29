@@ -32,7 +32,7 @@ end function
 
 function ImageFromPath(path, options = {} as Object)
 
-    if name = invalid then return invalid
+    if path = invalid then return invalid
     
     this = {
         id : invalid
@@ -64,9 +64,9 @@ function ImageFromPath(path, options = {} as Object)
         
         if width <> invalid and height <> invalid then m.request.setSize(width, height)
         
-        app.textureManager.RequestTexture(request)
+        app.textureManager.RequestTexture(m.request)
         
-        m.id = request.GetId()
+        m.id = m.request.GetId()
         
         bitmap = invalid
         if not async 'will block UI (synchronous request)
@@ -119,5 +119,5 @@ function ImageFromPath(path, options = {} as Object)
     end function
     
     app = GetApp()
-    return m.getBitmap(app.imagePaths[name], options)
+    return this.getBitmap(path, options)
 end function
