@@ -44,25 +44,25 @@ function UIButton(options)
         
         blurred : {
             titleColor : ColorWithName(options["title:color"])
-            backgroundImage : BitmapImageWithName(options["bg:image"])
+            backgroundImage : ImageNamed(options["bg:image"])
             backgroundColor : ColorWithName(options["bg:color"], ColorOpacity(options["bg:opacity"]))
         }
         
         focused : {
             titleColor : ColorWithName(options["title:focused:color"])
-            backgroundImage : BitmapImageWithName(options["bg:focused:image"])
+            backgroundImage : ImageNamed(options["bg:focused:image"])
             backgroundColor : ColorWithName(options["bg:focused:color"], ColorOpacity(options["bg:opacity"]))
         }
         
         highlight : {
             titleColor : ColorWithName(options["title:highlight:color"])
-            backgroundImage : BitmapImageWithName(options["bg:highlight:image"])
+            backgroundImage : ImageNamed(options["bg:highlight:image"])
             backgroundColor : ColorWithName(options["bg:highlight:color"], ColorOpacity(options["bg:opacity"]))
         }
         
         selected : {
             titleColor : ColorWithName(options["title:selected:color"])
-            backgroundImage : BitmapImageWithName(options["bg:selected:image"])
+            backgroundImage : ImageNamed(options["bg:selected:image"])
             backgroundColor : ColorWithName(options["bg:selected:color"], ColorOpacity(options["bg:opacity"]))
         }
     })

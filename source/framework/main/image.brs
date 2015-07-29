@@ -30,27 +30,25 @@
 ' Localization will be respected if specific
 ' HD, SD and Wide Screens assets will be respected if specific
 function initImages(app)
-    app.imagePaths = {
-    }
+    app.imagePaths = {}
     
-    getImagesInPath = function(path,imagePaths, getImagesInPath)
+    getImagesInPath = function(path, app, getImagesInPath)
         images = app.fileSystem.Find(path, "(.jpg|.png)")
         images.ResetIndex()
         image = images.GetIndex()
-        while path <> invalid
-            
+        while image <> invalid
+            app.imagePaths[image.tokenize(".")[0]] = path+"/"+image
             image = images.GetIndex()
         end while
         
         paths = app.fileSystem.GetDirectoryListing(path)
         paths.ResetIndex()
-        path = paths.GetIndex()
-        while path <> invalid
-            getImagesInPath(path, imagePaths, getImagesInPath)
-            path = paths.GetIndex()
+        subpath = paths.GetIndex()
+        while subpath <> invalid
+            getImagesInPath(path+"/"+subpath, app, getImagesInPath)
+            subpath = paths.GetIndex()
         end while
     end function
     
-    'getImagesInPath("pkg://locale/images",app.imagePaths, getImagesInPath)
-
+    getImagesInPath("pkg://locale/images", app, getImagesInPath)
 end function

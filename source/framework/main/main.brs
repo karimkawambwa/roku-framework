@@ -35,7 +35,6 @@ function main()
     while 1
         msg = app.msgPort.GetMessage()
         handled = false
-        'app.events.dispatch(msg)
         
         currentController = mainNav.currentController()
         currentView = currentController.view

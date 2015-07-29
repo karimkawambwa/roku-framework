@@ -24,6 +24,9 @@
 ' THE SOFTWARE.
 
 function ImageNamed(name, options = {} as Object)
+    if name = invalid then return invalid
+    
+    app = GetApp()
     return ImageFromPath(app.imagePaths[name], options)
 end function
 
