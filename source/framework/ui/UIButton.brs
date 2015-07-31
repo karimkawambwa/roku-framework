@@ -29,9 +29,7 @@ function UIButton(options)
     
     this = UIView(options, {
         type  : "UIButton"
-        isSelectable : true
-        hasFocus     : false
-        padding      : if_else(options.padding <> invalid, options.padding, 5)
+        padding : if_else(options.padding <> invalid, options.padding, 5)
         
         label : UIlabel({
             id : "title_label"
@@ -89,14 +87,14 @@ function UIButton(options)
         
         m.base_view_draw(component)
         
-        if m.hasFocus
+        if m.hasFocus()
             AddBorderToBitmap(bitmap, m.titleColor(), 1)
         end if
         return true
     end function
     
     this.bgColor = function()
-        if m.hasFocus
+        if m.hasFocus()
             if m.focused.backgroundColor < 0 then return m.titleColor()
             return m.focused.backgroundColor
         else
@@ -106,23 +104,38 @@ function UIButton(options)
     end function
     
     this.titleColor = function()
-        if m.hasFocus
+        if m.hasFocus()
             return m.focused.titleColor
         else
             return m.blurred.titleColor
         end if
     end function
     
-    this.base_view_focus = this.focus
-    this.focus = function(refresh = true)
-        m.hasFocus = true
-        m.base_view_focus(refresh)
+    this.onInteractionEvent = function(msg)
+        if msg = 6 ' press
+            
+            return true
+        else if 106 ' release
+            
+            return true
+        end if
+        return false ' not handled
     end function
     
-    this.base_view_blur = this.blur
-    this.blur = function(refresh = true)
-        m.hasFocus = false
-        m.base_view_blur(refresh)
+    this.shouldAcceptFocus = function() as Boolean
+        return true
+    end function
+    
+    this.shouldReleaseFocus = function() as Boolean
+        return true
+    end function
+    
+    this.onFocus = function()
+        
+    end function
+    
+    this.onBlur = function()
+        
     end function
     
     return this

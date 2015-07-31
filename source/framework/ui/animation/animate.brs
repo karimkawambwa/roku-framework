@@ -76,8 +76,6 @@ function IncludeAnimateTo(this)
                 ' RefreshScreen
                 RefreshScreen()
                 
-                'print now
-                
                 return now >= duration
             end function
             onStateChangeArg : [ 

@@ -38,8 +38,9 @@ function UIView(options, appendOptions = {} as Object)
         end function
     })
     
-    AddSpriteContainerTo(this)
+    IncludeSpriteContainerTo(this)
     IncludeAnimateTo(this)
+    IncludeUIInteractionTo(this)
     
     'Other Views options subclassing
     if appendOptions <> invalid then this.Append(appendOptions) 
@@ -124,14 +125,6 @@ function UIView(options, appendOptions = {} as Object)
         ' Everything belonging to this view will be draw on this
         m.sprites.Add(sprite)
         m.sprites.SetDrawableFlag(m.isOpaque())
-    end function
-    
-    this.focus = function(refresh = true)
-        if refresh then RefreshScreen()
-    end function
-    
-    this.blur = function(refresh = true)
-        if refresh then RefreshScreen()
     end function
     
     return this

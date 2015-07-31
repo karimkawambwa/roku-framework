@@ -51,5 +51,21 @@ function UIScrollView(options, appendOptions = {} as Object)
     this.scrollOffset = function(x, y, animated = true as Boolean)
     end function
     
+    this.shouldAcceptFocus = function() as Boolean
+        return true
+    end function
+    
+    this.shouldReleaseFocus = function() as Boolean
+        return false ' Event Gobbler
+    end function
+    
+    this.onFocus = function()
+        
+    end function
+    
+    this.onBlur = function()
+        
+    end function
+    
     return this
 end function
