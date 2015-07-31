@@ -19,5 +19,57 @@ Current working view example :
 	
 </view>
 
+Async Http network request can be performed this way : 
+        
+        ahttp("GET",{
+            url : "http://google.com"
+            done : function(response as Object)
+                headers = response.headers
+                body = response.body
+                
+            end function
+        }).fire()
 
+Image Loading can be performed by calling , ImageFromPath or ImageNamed
+ImageNamed uses the name of the image u dragged into the the images folder
+ImageFromPath takes in the full path of the image location, even a url path
+
+Async Loading returns the object and you can call cancel or reload
+Sync Loading will return Bitmap but block UI
+
+            ImageNamed(name, {
+            	async : true 'Mustbe Specified
+            	args : [ ] or { }
+            	height : optional
+            	width : optional
+            	scaleMode : optional default is 1
+            	cache : default is true
+            	complete : function(id, bitmap, args)
+            		
+            	end function
+            })
+            
+            ImageFromPath(path, {
+            	async : true 'Mustbe Specified
+            	args : [ ] or { }
+            	height : optional
+            	width : optional
+            	scaleMode : default is 1
+            	cache : default is true
+            	complete : function(id, bitmap, args)
+            		
+            	end function
+            })
+            
+
+Animating Example: 
+
+        m.view.children.childWithId("movies").animate({x : 1000}, outBounce, 4, 0, function(completed)
+            
+        end function)
+        
+Setting Focus :
+	
+	m.view.focusControl.focusOn("movies")
+            
 I will make a better ReadMe and Documentation File :) 
