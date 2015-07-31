@@ -64,9 +64,6 @@ function AddChildrenContainerTo(this)
         
         child.parent = m.parent
         
-        'Initialize if invalid
-        m.parent.initViewCompositor()
-        
         child.parentCompositor = m.parent.compositor
         if child.movedToParent <> invalid then child.movedToParent(m.parent)
     end function

@@ -34,6 +34,8 @@ function ImageFromPath(path, options = {} as Object)
 
     if path = invalid then return invalid
     
+    print path
+    
     this = {
         id : invalid
         request : invalid
@@ -62,6 +64,10 @@ function ImageFromPath(path, options = {} as Object)
         m.request.setAsync(m.async)
         m.request.setScaleMode(m.scaleMode)
         
+        if options.height <> invalid and options.height > 0 and options.width <> invalid and options.width > 0
+            m.request.SetSize(options.height, options.width)
+        end if
+        
         if width <> invalid and height <> invalid then m.request.setSize(width, height)
         
         app.textureManager.RequestTexture(m.request)
@@ -69,7 +75,7 @@ function ImageFromPath(path, options = {} as Object)
         m.id = m.request.GetId()
         
         bitmap = invalid
-        if not async 'will block UI (synchronous request)
+        if not m.async 'will block UI (synchronous request)
             msgport = app.textureManager.GetMessagePort()
             while not m.syncCompleted 'synchronous request completed check
                 msg = wait(0, msgport)
@@ -79,11 +85,10 @@ function ImageFromPath(path, options = {} as Object)
             end while
             m.syncCompleted = false 'reset
         else
-            m.requests.Push(options)
             app.textureEventListeners.Push(m)
         end if
         
-        return if_else(async, m, bitmap)
+        return if_else(m.async, m, bitmap)
     end function
     
     this.handleTextureEvent = function(msg)
@@ -97,19 +102,19 @@ function ImageFromPath(path, options = {} as Object)
         ' 4 Failed
         ' 5 Cancelled
         if state = 3
-            if m.async and m.completed <> invalid then 
+            if m.async and m.complete <> invalid then 
                 m.complete(msg.GetId(), msg.GetBitmap(), m.args)
             else if not m.async
                 m.syncCompleted = true
                 return msg.GetBitmap()
-            else if m.async and request.complete = invalid
-                print "BitmapManager: Image Lost, no complete callback for image with id : " + msg.GetId()app = GetApp()
+            else if m.async and m.complete = invalid
+                print "BitmapManager: Image Lost, no complete callback for image with id : " + msg.GetId()
                 app.textureManager.UnloadBitmap(msg.GetURI())
             end if
             
             if not m.cache then app.textureManager.UnloadBitmap(msg.GetURI())
         else if state = 4
-             'TODO : retry
+            'TODO : retry
             if not m.async then m.syncCompleted = true
             if not m.async then return invalid
         end if

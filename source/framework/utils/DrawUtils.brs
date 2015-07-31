@@ -43,7 +43,7 @@ function BeginScreenUpdate(app)
 end function
 
 function RefreshScreen()
-    print "___________BEGIN__RefreshScreen___________________"
+    'print "___________BEGIN__RefreshScreen___________________"
     
     app = GetApp()
     
@@ -65,7 +65,7 @@ function RefreshScreen()
     
     UpdateRoScreen(app)
     
-    print "___________END__RefreshScreen___________________"
+    'print "___________END__RefreshScreen___________________"
 end function
 
 function UpdateRoScreen(app)

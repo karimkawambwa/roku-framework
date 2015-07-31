@@ -56,7 +56,7 @@ function UIView(options, appendOptions = {} as Object)
         
         m.children.perform("draw", [bitmap])
         
-        print m.id+" drawable : ", sprite.GetDrawableFlag() 
+        'print m.id+" drawable : ", sprite.GetDrawableFlag() 
         'AddBorderToBitmap(bitmap, ColorWithName("red"), 1)
         
         'Draw the view compositor sprites
@@ -90,6 +90,7 @@ function UIView(options, appendOptions = {} as Object)
     ' Should be invoked once
     this.init = function()
         m.initBackground()
+        m.initViewCompositor()
     end function
     
     ' Should be invoked once

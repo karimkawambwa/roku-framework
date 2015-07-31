@@ -72,15 +72,11 @@ function IncludeAnimateTo(this)
                 m.updateConstraints()
                 
                 ' Layout the Views
-                layoutDone = false
-                layoutArgs = { context : m.parent, index : 0, workStack : []}
-                while not layoutDone
-                    layoutDone = PerformLayout(layoutArgs)
-                end while
+                Layout(m)
                 ' RefreshScreen
                 RefreshScreen()
                 
-                print now
+                'print now
                 
                 return now >= duration
             end function
