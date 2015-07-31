@@ -28,7 +28,7 @@ function UIButton(options)
     if options["bg:opacity"] = invalid then options["bg:opacity"] = "0"
     
     this = UIView(options, {
-        type  : "UIButton"
+        type  : "button"
         padding : if_else(options.padding <> invalid, options.padding, 5)
         
         label : UIlabel({

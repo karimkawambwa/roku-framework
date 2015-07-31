@@ -44,6 +44,11 @@ function IncludeUIInteractionTo(this)
         return true
     end function
     
+    this.interaction.willHandleUserInput = function() as Boolean
+        if m.view.shouldHandleUserInput <> invalid then return m.view.shouldHandleUserInput()
+        return false
+    end function
+    
     this.interaction.handleInteractionEvent = function(msg) as Boolean
         handled = false
         if m.view.onInteractionEvent <> invalid then handled = m.view.onInteractionEvent(msg)

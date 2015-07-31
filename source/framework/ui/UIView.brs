@@ -25,17 +25,13 @@
 
 function UIView(options, appendOptions = {} as Object)
     this = UILayout(options, {
-        type : "UIView"
+        type : "view"
         animating : false
         compositor : invalid
         parentCompositor : invalid
         
         backgroundOpacity : if_else(options["bg:opacity"] <> invalid, options["bg:opacity"], 1)
         backgroundColor   : invalid
-        
-        isFocusable : function()
-            return true
-        end function
     })
     
     IncludeSpriteContainerTo(this)

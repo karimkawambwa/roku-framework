@@ -116,9 +116,11 @@ function initAsyncTaskManager(app)
     end function
     
     app.async.endTask = function(id, state = "done" as String)
-        if id = invalid then return true
+        if id = invalid then return false
         
         task = m.taskWithId(id)
+        
+        if task = invalid then return false
 
         if task.onStateChange <> invalid
             task.onStateChange(state, task.onStateChangeArg)
