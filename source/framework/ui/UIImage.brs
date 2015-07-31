@@ -25,8 +25,8 @@
 
 function UIImage(options)
     this = UIView(options, {
-        name : options["image:name"]
-        src : options["image:src"]
+        name : options["name"]
+        src : options["src"]
         async : options["load:sync"] = invalid
     })
     

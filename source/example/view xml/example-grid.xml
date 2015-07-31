@@ -5,7 +5,7 @@
 	<view id="test" width="95%" height="100%" constraints="T|B|10|==|100|movies" bg:opacity="0.5" align_v="">
 		<view id="1" width="100" height="140" bg:color="black">
 		</view>
-		<image x="110" id="2" width="100" height="140" image:src="http://webneel.com/daily/sites/default/files/images/daily/02-2013/19-looper-creative-movie-poster-design.jpg"/>
-		<image x="220" id="3" width="100" height="140" image:name="sman"/>
+		<image x="110" id="2" width="100" height="140" src="http://webneel.com/daily/sites/default/files/images/daily/02-2013/19-looper-creative-movie-poster-design.jpg"/>
+		<image x="220" id="3" width="100" height="140" name="sman"/>
 	</view>
 </view>
