@@ -164,15 +164,17 @@ function SetupFocusControl(view)
             handled = m.buttonRight()
         end if
         
-        map = m.map[m.focused]
-        handled = map.view.interaction.handleInteractionEvent(msg)
+        if not handled then
+            map = m.map[m.focused]
+            handled = map.view.interaction.handleInteractionEvent(msg)
+        end if
         
         return handled
     end function
     
     this.buttonUp = function() as Boolean
         map = m.map[m.focused]
-        return m.handleButton(map.U, 2)
+        return m.handleButton(map.T, 2)
     end function
     
     this.buttonDown = function() as Boolean
@@ -195,15 +197,16 @@ function SetupFocusControl(view)
         
         curr = m.map[m.focused].view
         view = m.map[viewId].view
-        if not curr.interaction.canReleaseFocus()
-            return true
+        
+        if curr.interaction.canReleaseFocus(code) then
+            if view.focusControl <> invalid and not view.interaction.willHandleUserInput(code) then ' custom navigation
+                return view.focusControl.handleUserInput(code)
+            else
+                return m.focusOn(viewId)
+            end if
         end if
         
-        if view.focusControl <> invalid and not view.interaction.willHandleUserInput()
-            return view.focusControl.handleUserInput(code)
-        else
-            return m.focusOn(viewId)
-        end if
+        return false
     end function
     
     this.init()

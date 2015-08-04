@@ -26,6 +26,7 @@
 function UIScrollView(options, appendOptions = {} as Object)
     this = UIView(options, {
         type : "scrollview"
+        scrolling : "-"
         scrollingTaskId : invalid
         content : {
             view : invalid
@@ -52,8 +53,8 @@ function UIScrollView(options, appendOptions = {} as Object)
         m.largestYHeight = 0
         
         m.view.children["each"](m, function(index, child, m)
-            if child.y() >= m.largestYPos then
-                m.largestYPos = child.y()
+            if (child.y() - m.offset.y) + child.height()  >= m.largestYPos + m.largestYHeight then
+                m.largestYPos = child.y() - m.offset.y
                 m.largestYHeight = child.height()
             end if
         end function)
@@ -68,8 +69,8 @@ function UIScrollView(options, appendOptions = {} as Object)
         m.largestXWidth = 0
         
         m.view.children["each"](m, function(index, child, m)
-            if child.x() >= m.largestXPos then
-                m.largestXPos = child.x()
+            if (child.x() - m.offset.x) + child.width()  >= m.largestXPos + m.largestXWidth then
+                m.largestXPos = child.x() - m.offset.x
                 m.largestXWidth = child.width()
             end if
         end function)
@@ -79,7 +80,7 @@ function UIScrollView(options, appendOptions = {} as Object)
         return m.largestXPos + m.largestXWidth
     end function
     
-    this.content.setOffset = function(x, y)
+    this.content.applyOffset = function(x, y)
         m.offset.x = m.offset.x + x
         m.offset.y = m.offset.y + y
     end function
@@ -112,7 +113,7 @@ function UIScrollView(options, appendOptions = {} as Object)
             x = (m.content.offset.x + m.width())
         end if
         
-        m.content.setOffset(x, y)
+        m.content.applyOffset(x, y)
         m.children["each"]([x,y], function(index, child, args)
             x = args[0]
             y = args[1]
@@ -124,27 +125,31 @@ function UIScrollView(options, appendOptions = {} as Object)
         RefreshScreen()
     end function
     
-    this.shouldHandleUserInput = function()
+    this.shouldHandleUserInput = function(code)
         return true
     end function
     
-    this.shouldAcceptFocus = function() as Boolean
+    this.shouldAcceptFocus = function(code) as Boolean
         return true
     end function
     
-    this.shouldReleaseFocus = function() as Boolean
-        return false ' Gobble Events
+    this.shouldReleaseFocus = function(code) as Boolean
+        return (code = 3 and m.hitBottom()) or (code = 2 and m.hitTop())
     end function
     
     this.onInteractionEvent = function(msg)
-        
         if msg = 2 ' up pressed
-            m.createScrollingTaskWithOffset(0, 2)
-        else if msg = 102 ' up released
-            KillTask(m.scrollingTaskId)
+            if not m.hitTop()
+                m.scrolling = "up"
+                m.createScrollingTaskWithOffset(0, 2)
+            end if
         else if msg = 3 ' down pressed
-            m.createScrollingTaskWithOffset(0, -2)
-        else if msg = 103 ' down released
+            if not m.hitBottom()
+                m.scrolling = "down"
+                m.createScrollingTaskWithOffset(0, -2)
+            end if
+        else if msg = 103 or  msg = 102 ' down released  up released
+            m.scrolling = "-"
             KillTask(m.scrollingTaskId)
         end if
         
@@ -162,7 +167,11 @@ function UIScrollView(options, appendOptions = {} as Object)
                 
                 m.scrollOffset(x, y)
                 
-                return m.content.offset.y + y + m.height() > m.content.height()
+                if m.scrolling = "down" then 
+                    return m.hitBottom()
+                else if m.scrolling = "up" then
+                    return m.hitTop()
+                end if
             end function
             onStateChangeArg : m
             onStateChange : function(state, onStateChangeArg)
@@ -182,6 +191,16 @@ function UIScrollView(options, appendOptions = {} as Object)
     
     this.onBlur = function()
         
+    end function
+    
+    ' helpers
+    
+    this.hitTop = function() as Boolean
+        return m.content.offset.y >= 0
+    end function
+    
+    this.hitBottom = function() as Boolean
+        return abs(m.content.offset.y) + m.height() >= m.content.height()
     end function
     
     return this

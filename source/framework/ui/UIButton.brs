@@ -122,11 +122,11 @@ function UIButton(options)
         return false ' not handled
     end function
     
-    this.shouldAcceptFocus = function() as Boolean
+    this.shouldAcceptFocus = function(code) as Boolean
         return true
     end function
     
-    this.shouldReleaseFocus = function() as Boolean
+    this.shouldReleaseFocus = function(code) as Boolean
         return true
     end function
     

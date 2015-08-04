@@ -34,18 +34,18 @@ function IncludeUIInteractionTo(this)
         return m.interaction.x___.hasFocus
     end function
     
-    this.interaction.canAcceptFocus = function() as Boolean
-        if m.view.shouldAcceptFocus <> invalid then return m.view.shouldAcceptFocus()
+    this.interaction.canAcceptFocus = function(code = invalid) as Boolean
+        if m.view.shouldAcceptFocus <> invalid then return m.view.shouldAcceptFocus(code)
         return false
     end function
     
-    this.interaction.canReleaseFocus = function() as Boolean
-        if m.view.shouldReleaseFocus <> invalid then return m.view.shouldReleaseFocus()
+    this.interaction.canReleaseFocus = function(code) as Boolean
+        if m.view.shouldReleaseFocus <> invalid then return m.view.shouldReleaseFocus(code)
         return true
     end function
     
-    this.interaction.willHandleUserInput = function() as Boolean
-        if m.view.shouldHandleUserInput <> invalid then return m.view.shouldHandleUserInput()
+    this.interaction.willHandleUserInput = function(code) as Boolean
+        if m.view.shouldHandleUserInput <> invalid then return m.view.shouldHandleUserInput(code)
         return false
     end function
     
