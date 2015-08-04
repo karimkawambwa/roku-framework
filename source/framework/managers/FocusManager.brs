@@ -22,10 +22,10 @@ function SetupFocusControl(view)
         end if
         
         nxt = m.map[viewId].view
-        nxt.focus(curr = invalid)
+        nxt.interaction.focus(curr = invalid)
         m.focused = nxt.id
         
-        if curr <> invalid then curr.blur()
+        if curr <> invalid then curr.interaction.blur()
         
         return true
     end function
@@ -33,7 +33,7 @@ function SetupFocusControl(view)
     this.createFocusMap = function()
         m.view.children["each"](m, function(index, currView, m) as Boolean
             
-            if not currView.isFocusable() then return true 'continue
+            if not currView.interaction.canAcceptFocus() then return true 'continue
             
             map = { T: invalid, B : invalid, L: invalid, R: invalid, tPos: invalid, bPos: invalid, lPos: invalid, rPos: invalid, view : currView }
             
@@ -44,9 +44,9 @@ function SetupFocusControl(view)
                 
                 if currView.id = nextView.id then return true 'continue
                 
-                if not nextView.isFocusable() then return true 'continue
+                if not nextView.interaction.canAcceptFocus() then return true 'continue
                
-                if nextView.isOpaque()
+                'if nextView.isOpaque()
                     ' bottom selection
                     score = m.calculateScore(currView, nextView, "bottom")
                     if score <> invalid and (map.bPos = invalid or map.bPos > score)
@@ -78,7 +78,7 @@ function SetupFocusControl(view)
                             map.L = nextView.id
                         end if
                     end if
-                end if
+                'end if
                 
                 return true
             end function)
@@ -87,7 +87,10 @@ function SetupFocusControl(view)
             
             m.map[currView.id] = map
             
-            if currView.type = "UIView" and currView.children.Count() > 0 then SetupFocusControl(currView)
+            print currView.id
+            print map
+            
+            if currView.type = "view" and currView.children.Count() > 0 then SetupFocusControl(currView)
             
             return true
         end function)
@@ -150,41 +153,60 @@ function SetupFocusControl(view)
     end function
 
     this.handleUserInput = function(msg) as Boolean
-        print "handleUserInput : ", msg
+        handled = false
         if msg = 2
-            return m.buttonUp()
+            handled = m.buttonUp()
         else if msg = 3
-            return m.buttonDown()
+            handled =m.buttonDown()
         else if msg = 4
-            return m.buttonLeft()
+            handled = m.buttonLeft()
         else if msg = 5
-            return m.buttonRight()
+            handled = m.buttonRight()
         end if
-        return false
+        
+        if not handled then
+            map = m.map[m.focused]
+            handled = map.view.interaction.handleInteractionEvent(msg)
+        end if
+        
+        return handled
     end function
     
     this.buttonUp = function() as Boolean
         map = m.map[m.focused]
-        m.focusOn(map.U)
-        return true
+        return m.handleButton(map.T, 2)
     end function
     
     this.buttonDown = function() as Boolean
         map = m.map[m.focused]
-        m.focusOn(map.D)
-        return true
+        return m.handleButton(map.B, 3)
     end function
     
     this.buttonLeft = function() as Boolean
         map = m.map[m.focused]
-        m.focusOn(map.L)
-        return true
+        return m.handleButton(map.L, 4)
     end function
     
     this.buttonRight = function() as Boolean
         map = m.map[m.focused]
-        m.focusOn(map.R)
-        return true
+        return m.handleButton(map.R, 5)
+    end function
+    
+    this.handleButton = function(viewId, code) as Boolean
+        if viewId = invalid or m.map[viewId] = invalid then return false
+        
+        curr = m.map[m.focused].view
+        view = m.map[viewId].view
+        
+        if curr.interaction.canReleaseFocus(code) then
+            if view.focusControl <> invalid and not view.interaction.willHandleUserInput(code) then ' custom navigation
+                return view.focusControl.handleUserInput(code)
+            else
+                return m.focusOn(viewId)
+            end if
+        end if
+        
+        return false
     end function
     
     this.init()

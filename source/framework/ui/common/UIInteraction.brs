@@ -21,17 +21,50 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
-function AddUIInteractionTo(this)
+function IncludeUIInteractionTo(this)
+
+    this.interaction = {
+        view : this
+        x___ : {
+            hasFocus : false
+        }
+    }
     
-    this.onClickDown = function()
+    this.hasFocus = function()
+        return m.interaction.x___.hasFocus
     end function
     
-    this.onClickRelease = function()
+    this.interaction.canAcceptFocus = function(code = invalid) as Boolean
+        if m.view.shouldAcceptFocus <> invalid then return m.view.shouldAcceptFocus(code)
+        return false
     end function
     
-    this.onFocus = function()
+    this.interaction.canReleaseFocus = function(code) as Boolean
+        if m.view.shouldReleaseFocus <> invalid then return m.view.shouldReleaseFocus(code)
+        return true
     end function
     
-    this.onUnFocus = function()
+    this.interaction.willHandleUserInput = function(code) as Boolean
+        if m.view.shouldHandleUserInput <> invalid then return m.view.shouldHandleUserInput(code)
+        return false
     end function
+    
+    this.interaction.handleInteractionEvent = function(msg) as Boolean
+        handled = false
+        if m.view.onInteractionEvent <> invalid then handled = m.view.onInteractionEvent(msg)
+        return handled
+    end function
+    
+    this.interaction.focus = function(refresh = true)
+        m.x___.hasFocus = true
+        if m.view.onFocus <> invalid then m.view.onFocus()
+        if refresh then RefreshScreen()
+    end function
+    
+    this.interaction.blur = function(refresh = true)
+        m.x___.hasFocus = false
+        if m.view.onBlur <> invalid then m.view.onBlur()
+        if refresh then RefreshScreen()
+    end function
+    
 end function

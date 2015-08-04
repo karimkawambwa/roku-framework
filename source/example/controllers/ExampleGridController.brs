@@ -53,9 +53,9 @@ function ExampleGridController()
         'm.view is not invalid and is visible
         m.view.focusControl.focusOn("movies")
         
-        m.view.children.childWithId("movies").animate({x : 1000}, outBounce, 4, 0, function(completed)
+        'm.view.children.childWithId("movies").animate({x : 1000}, outBounce, 4, 0, function(completed)
             
-        end function)
+        'end function)
     end function
     
     ' @required ListView Datasource Call

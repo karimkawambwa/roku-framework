@@ -25,9 +25,35 @@
 
 function UIImage(options)
     this = UIView(options, {
-        bitmap : invalid
-        
+        name : options["name"]
+        src : options["src"]
+        async : options["load:sync"] = invalid
     })
+    
+    this.setup = function()
+        options = {
+            async : true
+            args : [m]
+            width : m.width()
+            height : m.height()
+            complete : m.imageLoaded
+        }
+        if m.name <> invalid
+            ImageNamed(m.name, options)
+        else if m.src <> invalid
+            ImageFromPath(m.src, options)
+        end if
+    end function
+    
+    this.imageLoaded = function(id, bitmap, args)
+        m = args[0]
+        
+        region = CreateRegion(0,0,m.width(), m.height(), bitmap)
+        sprite = CreateSprite(0,0,region, m.compositor)
+        RefreshScreen()
+    end function
+    
+    this.setup()
     
     return this
 end function

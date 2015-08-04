@@ -23,6 +23,13 @@
 ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ' THE SOFTWARE.
 
+function Layout(view)
+    layoutDone = false
+    layoutArgs = { context : if_else(view.parent <> invalid, view.parent, view), index : 0, workStack : []}
+    while not layoutDone
+        layoutDone = PerformLayout(layoutArgs)
+    end while
+end function
 
 function PerformLayout(args) as Boolean
     m = args.context
@@ -46,7 +53,7 @@ function PerformLayout(args) as Boolean
     
     view.prepareForLayout()
     
-    print "performing layout for view : "+ view.id
+    'print "performing layout for view : "+ view.id
     
     if view.constraints <> invalid and view.constraints.Count() > 0
 
@@ -66,8 +73,8 @@ function PerformLayout(args) as Boolean
         view.setY(((m.height()/2) - (view.height()/2)))
     end if
     
-    print "dimmensions :"
-    print view.dim___pr
+    'print "dimmensions :"
+    'print view.dim___pr
     
     if view.children.Count() <> 0
         args.workStack.Push({context : m, index : args.index})

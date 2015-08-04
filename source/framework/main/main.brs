@@ -35,7 +35,6 @@ function main()
     while 1
         msg = app.msgPort.GetMessage()
         handled = false
-        'app.events.dispatch(msg)
         
         currentController = mainNav.currentController()
         currentView = currentController.view
@@ -67,8 +66,8 @@ function main()
         if type(msg) = "roTextureRequestEvent"
             idx = 0
             for each listener in app.textureEventListeners
-                if listener.id = msg.GetSourceIdentity()
-                    done = listener.handleUrlEvent(msg)
+                if listener.id = msg.GetId()
+                    done = listener.handleTextureEvent(msg)
                     if done then
                         app.textureEventListeners.Delete(idx)
                     end if

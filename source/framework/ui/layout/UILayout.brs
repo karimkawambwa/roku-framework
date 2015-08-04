@@ -25,6 +25,7 @@ function UILayout(options, appendOptions = {} as Object)
     app = GetApp()
     this = {
         id  :  if_else(options.id <> invalid, options.id, uniqueid())
+        type : "layout"
         '              top (T)
         '            _____________
         '           |             |
