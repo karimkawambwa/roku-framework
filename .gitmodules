@@ -1,3 +1,3 @@
-[submodule "/Users/darrylcheng/Documents/roku-framework/source/framework/roku-image-named"]
-	path = /Users/darrylcheng/Documents/roku-framework/source/framework/roku-image-named
+[submodule "roku-image-named"]
+	path = roku-image-named
 	url = https://github.com/kaayr1m/roku-image-named.git
