@@ -1,3 +1,6 @@
 [submodule "roku-image-named"]
 	path = roku-image-named
 	url = https://github.com/kaayr1m/roku-image-named.git
+[submodule "roku-font-with-name"]
+	path = roku-font-with-name
+	url = https://github.com/kaayr1m/roku-font-with-name.git
