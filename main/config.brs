@@ -22,7 +22,7 @@
 ' THE SOFTWARE.
 
 function Config(app)
-    app.frameworkFolder = "pkg://source/framework/"
+    app.frameworkFolder = "pkg://source/roku-framework/"
     app.viewFolder = "pkg://source/views/"
     
     app.delegate.config(app)
