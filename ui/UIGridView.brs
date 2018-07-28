@@ -140,5 +140,21 @@ function UIGridView(options)
         'TODO :
     end function
     
+    this.base_shouldReleaseFocus = this.shouldReleaseFocus
+    this.shouldReleaseFocus = function(code) as Boolean
+        if m.items.Count() > 0
+            
+        end if
+
+        this.base_shouldReleaseFocus()
+    end function
+
+    this.base_onFocus = this.onFocus
+    this.onFocus = function()
+        this.base_onFocus()
+        
+        m.items.item(0).focus()
+    end function
+    
     return this
 end function
